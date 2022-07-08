@@ -1,4 +1,4 @@
-import React, { ChangeEvent, forwardRef, RefObject } from 'react';
+import React, { ChangeEvent, forwardRef } from 'react';
 
 import styled from 'styled-components';
 
