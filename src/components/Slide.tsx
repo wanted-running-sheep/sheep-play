@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components';
 import RightDirection from '@/assets/icons/RightDirection';
 import LeftDirection from '@/assets/icons/LeftDirection';
+import { MovieProps } from 'Movies';
 
-const Slide = ({ movies }) => {
+const Slide = ( {movies} : MovieProps) => {
     const TOTAL_SLIDES = 9;
 
     const [currentSlide, setCurrentSlide] = useState(0);
