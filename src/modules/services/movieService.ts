@@ -1,4 +1,4 @@
-import { HttpRequest } from '@/http/httpRequest';
+import { HttpRequest } from '@/modules/http/httpRequest';
 import axios from 'axios';
 
 export const movieService = axios.create({
