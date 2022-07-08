@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import Search from '@/assets/icons/Search';
-import styled, { Keyframes, keyframes } from 'styled-components';
-import Star from '@/assets/icons/Star';
-import Item from './Item';
 import { useNavigate } from 'react-router';
-import Menu from '@/assets/icons/Menu';
+import styled, { Keyframes, keyframes } from 'styled-components';
+import { Search, Star, Menu } from '@/assets/icons';
+
+import Item from './Item';
 import DropDownMenu from './DropDownMenu';
 
 export interface NavBarItemInterface {
@@ -12,9 +11,7 @@ export interface NavBarItemInterface {
   title: 'Search' | 'Bookmark';
   onClickLink: () => void;
 }
-
-const NavBar: React.FC = () => {
-  const dropDownMountedAnimation = keyframes`
+const dropDownMountedAnimation = keyframes`
   0% {
       opacity: 0;
   }
@@ -22,8 +19,7 @@ const NavBar: React.FC = () => {
       opacity: 1;
   }
 `;
-
-  const dropDownUnMountedAnimation = keyframes`
+const dropDownUnMountedAnimation = keyframes`
   0% {
     opacity: 1;
   }
@@ -33,6 +29,7 @@ const NavBar: React.FC = () => {
   }
 `;
 
+const NavBar: React.FC = () => {
   const navigate = useNavigate();
   const [isMountedMenu, setIsMountedMenu] = useState(false);
   const [animation, setAnimation] = useState<Keyframes>(
@@ -53,11 +50,13 @@ const NavBar: React.FC = () => {
   ];
 
   const onToggleMenu = () => {
+    const TOGGLE_DELAYED = 250;
+
     if (isMountedMenu) {
       setAnimation(dropDownUnMountedAnimation);
       setTimeout(() => {
         setIsMountedMenu((prevToggle) => !prevToggle);
-      }, 250);
+      }, TOGGLE_DELAYED);
       return;
     }
 

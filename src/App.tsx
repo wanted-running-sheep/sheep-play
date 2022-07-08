@@ -1,5 +1,5 @@
 import Router from '@/components/Router';
-import NavBar from './components/navBar';
+import NavBar from '@/components/NavBar';
 
 const App = () => {
   return (

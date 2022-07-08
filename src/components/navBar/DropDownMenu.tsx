@@ -1,5 +1,5 @@
 import styled, { css, Keyframes } from 'styled-components';
-import { NavBarItemInterface } from '.';
+import { NavBarItemInterface } from './index';
 import MenuItem from './MenuItem';
 
 interface DropDownMenuProps {
@@ -16,8 +16,8 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
     <>
       <Wrapper animation={animation}>
         <Container>
-          {menuItems.map((menuItem, i) => (
-            <MenuItem key={i} menuItem={menuItem} />
+          {menuItems.map((menuItem, index) => (
+            <MenuItem key={index} menuItem={menuItem} />
           ))}
         </Container>
       </Wrapper>

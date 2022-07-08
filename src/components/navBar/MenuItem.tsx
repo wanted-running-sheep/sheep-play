@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavBarItemInterface } from '.';
+import { NavBarItemInterface } from './index';
 
 interface MenuItemProps {
   menuItem: NavBarItemInterface;
