@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { movieRequest } from '@/services/movieService';
+import { movieRequest } from '@/modules/services/movieService';
 import { AxiosResponse } from 'axios';
 
 import { MovieProps } from 'Movies';

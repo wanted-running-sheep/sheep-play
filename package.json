@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.js & npm run server",
     "build": "webpack",
-    "server": "json-server --watch ./src/database/movie.json --port 8000"
+    "server": "json-server --watch ./src/assets/database/movie.json --port 8000"
   },
   "repository": {
     "type": "git",
