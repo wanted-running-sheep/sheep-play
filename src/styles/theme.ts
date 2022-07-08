@@ -11,6 +11,9 @@ const color = {
     white: '#FFFFFF',
     gray: '#81838E',
   },
+  border: {
+    hover: '#9896FF',
+  },
 };
 
 export const theme = {
