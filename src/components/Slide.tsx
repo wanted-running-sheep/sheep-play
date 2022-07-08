@@ -78,7 +78,7 @@ const Arrows = styled.div`
 
 const Button = styled.button`
     padding: 0;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.color.background.white};
 `;
 
 const SlideWrapper = styled.div`
