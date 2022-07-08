@@ -44,8 +44,8 @@ const Slide = ({ movies }) => {
                 </Button>
             </Arrows>
             <SlideWrapper ref={slideRef}>
-                {movies?.map((movie) => (
-                    <PosterImage key={movie.id} src={movie.poster} alt="title" />
+                {movies?.map(({id, poster}) => (
+                    <PosterImage key={id} src={poster} alt="title" />
                 ))}
             </SlideWrapper>
         </Container>
