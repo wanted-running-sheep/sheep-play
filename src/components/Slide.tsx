@@ -7,7 +7,7 @@ const Slide = ({ movies }) => {
     const TOTAL_SLIDES = 9;
 
     const [currentSlide, setCurrentSlide] = useState(0);
-    const slideRef = useRef(null);
+    const slideRef = useRef<HTMLDivElement>(null);
 
     // const [validNextBtn, setValidNextBtn] = useState(true);
     // const [validPrevBtn, setValidPrevBtn] = useState(true);
