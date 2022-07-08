@@ -96,7 +96,7 @@ const PosterImage = styled.img`
     object-fit: contain;
     transition: 0.2s;
     &:hover{
-        border: 5px solid #9896FF;
+        border: 5px solid ${({ theme }) => theme.color.border.hover};
         object-fit: cover;
         height: 400px;
     }
