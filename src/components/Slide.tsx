@@ -29,8 +29,11 @@ const Slide = ({ movies }) => {
     };
     
     useEffect(() => {
-        slideRef.current.style.transition = 'all 0.5s ease-in-out';
-        slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
+       const slide = slideRef.current;
+       if(slide) {
+            slide.style.transition = 'all 0.5s ease-in-out';
+            slide.style.transform = `translateX(-${currentSlide}00%)`;
+       }
     }, [currentSlide]);
 
     return (
