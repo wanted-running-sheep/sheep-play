@@ -5,10 +5,14 @@ const color = {
     primary: '#292C3D',
     indigo: '#2E3142',
     darkgray: '#606376A6',
+    white: '#FFFFFF',
   },
   font: {
     white: '#FFFFFF',
     gray: '#81838E',
+  },
+  border: {
+    lightblue: '#9896FF',
   },
 };
 

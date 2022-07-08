@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import RightDirection from '@/assets/icons/RightDirection';
 import LeftDirection from '@/assets/icons/LeftDirection';
+import { MovieProps } from 'Movies';
 
-const Slide = ({ movies }) => {
+const Slide = ({ movies }: { movies: MovieProps[] }) => {
   const TOTAL_SLIDES = 9;
-
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slideRef = useRef(null);
+  const slideRef = useRef<HTMLDivElement>(null);
 
   // const [validNextBtn, setValidNextBtn] = useState(true);
   // const [validPrevBtn, setValidPrevBtn] = useState(true);
@@ -29,8 +29,11 @@ const Slide = ({ movies }) => {
   };
 
   useEffect(() => {
-    slideRef.current.style.transition = 'all 0.5s ease-in-out';
-    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
+    const slide = slideRef.current;
+    if (slide) {
+      slide.style.transition = 'all 0.5s ease-in-out';
+      slide.style.transform = `translateX(-${currentSlide}00%)`;
+    }
   }, [currentSlide]);
 
   return (
@@ -44,8 +47,8 @@ const Slide = ({ movies }) => {
         </Button>
       </Arrows>
       <SlideWrapper ref={slideRef}>
-        {movies?.map((movie) => (
-          <PosterImage key={movie.id} src={movie.poster} alt="title" />
+        {movies?.map(({ id, large_cover_image, title }) => (
+          <PosterImage key={id} src={large_cover_image} alt={title} />
         ))}
       </SlideWrapper>
     </Container>
@@ -75,7 +78,7 @@ const Arrows = styled.div`
 
 const Button = styled.button`
   padding: 0;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.color.background.white};
 `;
 
 const SlideWrapper = styled.div`
@@ -93,7 +96,7 @@ const PosterImage = styled.img`
   object-fit: contain;
   transition: 0.2s;
   &:hover {
-    border: 5px solid #9896ff;
+    border: 5px solid ${({ theme }) => theme.color.border.lightblue};
     object-fit: cover;
     height: 400px;
   }
