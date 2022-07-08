@@ -12,7 +12,7 @@ export class HttpRequest {
     callback(response);
   }
 
-  async patch(id: string, data: {}) {
+  async patch(id: number, data: {}) {
     this.service.patch(`${id}`, data);
   }
 }

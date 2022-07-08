@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { movieRequest } from '@/services/movieService';
 import { AxiosResponse } from 'axios';
 
+import { MovieProps } from 'Movies';
+
 export const useMovieModel = () => {
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useState<MovieProps[]>([]);
 
   const getMoviesCallback = (response: AxiosResponse) => {
     setMovies(response.data);
@@ -13,7 +15,7 @@ export const useMovieModel = () => {
     movieRequest.get('', getMoviesCallback);
   };
 
-  const patchMovieById = async (id: string, data: {}) => {
+  const patchMovieById = async (id: number, data: {}) => {
     movieRequest.patch(id, data);
   };
 

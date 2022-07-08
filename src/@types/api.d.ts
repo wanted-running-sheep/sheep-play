@@ -10,12 +10,12 @@ declare module 'Movies' {
     rating: number;
     runtime: number;
     genres: string[];
-    summary: string | '';
-    description_full: string | '';
-    synopsis: string | '';
-    yt_trailer_code: string | '';
+    summary: string;
+    description_full: string;
+    synopsis: string;
+    yt_trailer_code: string;
     language: string;
-    mpa_rating: string | '';
+    mpa_rating: string;
     background_image: string;
     background_image_original: string;
     small_cover_image: string;
