@@ -18,6 +18,7 @@ const SearchedList = ({ inputText, movies }: searchListProps) => {
   };
 
   useEffect(() => {
+    console.log('inputText', inputText);
     setRecommendedMovies(getFilteredMovies(filteredOptions));
   }, [inputText]);
 
