@@ -16,6 +16,7 @@ const SearchedList = ({ inputText, movies }: searchListProps) => {
     movies: movies,
     listCount: 10,
   };
+  const MSG_NOT_FOUND_MOVIE = '찾으려는 작품이 존재하지 않습니다.';
 
   useEffect(() => {
     console.log('inputText', inputText);
@@ -33,7 +34,7 @@ const SearchedList = ({ inputText, movies }: searchListProps) => {
         <ul>
           {recommendedMovies.length === 0 ? (
             <RecommenedTextWrap isEnabledHover={false}>
-              <RecommendedText>검색어 없음</RecommendedText>
+              <RecommendedText>{MSG_NOT_FOUND_MOVIE}</RecommendedText>
             </RecommenedTextWrap>
           ) : (
             recommendedMovies.map((title, index) => (
