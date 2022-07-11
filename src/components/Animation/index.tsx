@@ -10,11 +10,11 @@ interface AnimationProps extends AnimationBoxProps {
 }
 
 const Animation = ({ file, height, width }: AnimationProps) => {
-  const rocketRef = useRef<HTMLDivElement>(null);
+  const lottieRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (rocketRef.current) {
+    if (lottieRef.current) {
       const instance = lottie.loadAnimation({
-        container: rocketRef.current,
+        container: lottieRef.current,
         renderer: 'svg',
         loop: true,
         autoplay: true,
@@ -23,7 +23,7 @@ const Animation = ({ file, height, width }: AnimationProps) => {
       return () => instance.destroy();
     }
   }, []);
-  return <div style={{ height: height, width: width }} ref={rocketRef}></div>;
+  return <div style={{ height: height, width: width }} ref={lottieRef}></div>;
 };
 
 export default Animation;

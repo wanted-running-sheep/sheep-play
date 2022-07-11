@@ -14,23 +14,24 @@ const sizes: MediaQueryProps = {
 
 type BackQuoteArgs = string[];
 
+// literals로 css 속성 받아 CSSProp값으로 리턴한다.
 const media = {
-  mobile: (literals: TemplateStringsArray, ...args: BackQuoteArgs): CSSProp =>
+  mobile: (literals: TemplateStringsArray): CSSProp =>
     css`
       @media only screen and (max-width: ${sizes.mobile}px) {
-        ${css(literals, ...args)}
+        ${css(literals)}
       }
     `,
-  tablet: (literals: TemplateStringsArray, ...args: BackQuoteArgs): CSSProp =>
+  tablet: (literals: TemplateStringsArray): CSSProp =>
     css`
       @media only screen and (max-width: ${sizes.tablet}px) {
-        ${css(literals, ...args)}
+        ${css(literals)}
       }
     `,
-  desktop: (literals: TemplateStringsArray, ...args: BackQuoteArgs): CSSProp =>
+  desktop: (literals: TemplateStringsArray): CSSProp =>
     css`
       @media only screen and (max-width: ${sizes.desktop}px) {
-        ${css(literals, ...args)}
+        ${css(literals)}
       }
     `,
 } as Record<
