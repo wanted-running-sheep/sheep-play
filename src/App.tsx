@@ -1,12 +1,6 @@
-import Router from '@/components/Router';
-import NavBar from '@/components/NavBar';
+import Router from '@/routes';
 
 const App = () => {
-  return (
-    <>
-      <NavBar />
-      <Router />
-    </>
-  );
+  return <Router />;
 };
 export default App;
