@@ -4,7 +4,9 @@ export default function createFuzzyMatcher(input: string) {
   const pattern: string = input
     .split('')
     .map(escapeRegExp)
-    .map((pattern) => '(' + pattern + ')')
+    .map(
+      (pattern) => '([' + pattern.toLowerCase() + pattern.toUpperCase() + '])'
+    )
     .join('.*?');
   return new RegExp(pattern);
 }
