@@ -7,16 +7,19 @@ import { MovieProps } from 'Movies';
 export const useMovieModel = () => {
   const [movies, setMovies] = useState<MovieProps[]>([]);
 
-  const getMoviesCallback = (response: AxiosResponse) => {
-    setMovies(response.data);
+  const updateMovies = (response: AxiosResponse | void) => {
+    if (response) {
+      setMovies(response.data);
+    }
   };
 
-  const getMovies = () => {
-    movieRequest.get('', getMoviesCallback);
+  const getMovies = async () => {
+    const response = await movieRequest.get('');
+    updateMovies(response);
   };
 
   const patchMovieById = async (id: number, data: {}) => {
-    movieRequest.patch(id, data);
+    return await movieRequest.patch(id, data);
   };
 
   return {

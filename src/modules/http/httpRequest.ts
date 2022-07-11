@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosResponse } from 'axios';
+import { AxiosInstance } from 'axios';
 
 export class HttpRequest {
   private service: AxiosInstance;
@@ -7,12 +7,13 @@ export class HttpRequest {
     this.service = service;
   }
 
-  async get(url: string, callback: (response: AxiosResponse) => void) {
-    const response = await this.service.get(url);
-    callback(response);
+  get(url: string) {
+    return this.service.get(url).catch((error) => {
+      console.log('error: ', error);
+    });
   }
 
-  async patch(id: number, data: {}) {
-    this.service.patch(`${id}`, data);
+  patch(id: number, data: {}) {
+    return this.service.patch(`/${id}`, data);
   }
 }
