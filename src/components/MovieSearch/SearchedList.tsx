@@ -11,9 +11,14 @@ interface searchListProps {
 
 const SearchedList = ({ inputText, movies }: searchListProps) => {
   const [recommendedMovies, setRecommendedMovies] = useState<string[]>([]);
+  const filteredOptions = {
+    inputText: inputText,
+    movies: movies,
+    listCount: 10,
+  };
 
   useEffect(() => {
-    setRecommendedMovies(getFilteredMovies(inputText, movies));
+    setRecommendedMovies(getFilteredMovies(filteredOptions));
   }, [inputText]);
 
   const createMarkup = (htmlElement: string) => {
