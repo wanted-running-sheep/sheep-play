@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import styled, { Keyframes, keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { Search, Star } from '@/assets/icons';
 import Item from './Item';
-
-export interface NavBarItemInterface {
-  Icon: () => JSX.Element;
-  title: 'Search' | 'Bookmark';
-  onClickLink: () => void;
-}
+import { NavBarItemInterface } from 'navigation';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -58,6 +52,4 @@ const Wrapper = styled.nav`
   `}
 `;
 
-const Container = styled.ul`
-  list-style: none;
-`;
+const Container = styled.ul``;

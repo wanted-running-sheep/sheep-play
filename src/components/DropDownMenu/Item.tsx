@@ -1,5 +1,6 @@
+import { NavBarItemInterface } from 'navigation';
 import styled from 'styled-components';
-import { NavBarItemInterface } from '@/components/NavBar';
+
 interface ItemProps {
   menuItem: NavBarItemInterface;
 }

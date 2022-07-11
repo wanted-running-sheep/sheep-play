@@ -1,4 +1,5 @@
 import media from './media';
+import { dropDownAnimation } from './animation';
 
 const color = {
   background: {
@@ -19,5 +20,6 @@ const color = {
 export const theme = {
   color,
   media,
+  dropDownAnimation,
 };
 export type Theme = typeof theme;
