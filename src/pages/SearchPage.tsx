@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Slide from '@/components/Slide';
-import axios from 'axios';
-import { MovieProps } from 'Movies';
+import { useMovieModel } from '@/modules/models/useMovieModel';
+import Layout from '@/components/Layout';
 
 const SearchPage = () => {
-  const [movies, setMovies] = useState<MovieProps[]>([]);
+  const { movies, getMovies } = useMovieModel();
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/movies') //자체적으로 데이터 테스트용도로 3001포트 사용
-      .then((res) => {
-        setMovies(res.data.slice(0, 10));
-      });
+    getMovies();
   }, []);
 
   return (
-    <div>
+    <Layout>
       <Slide movies={movies} />
-    </div>
+    </Layout>
   );
 };
 

@@ -1,12 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
-import { NavBarItemInterface } from './index';
-
-interface MenuItemProps {
+import { NavBarItemInterface } from '@/components/NavBar';
+interface ItemProps {
   menuItem: NavBarItemInterface;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ menuItem }) => {
+const Item = ({ menuItem }: ItemProps) => {
   const { Icon, title, onClickLink } = menuItem;
   return (
     <Container onClick={onClickLink}>
@@ -18,7 +16,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem }) => {
   );
 };
 
-export default MenuItem;
+export default Item;
 
 const Container = styled.li`
   cursor: pointer;

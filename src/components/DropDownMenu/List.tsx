@@ -1,23 +1,20 @@
 import styled, { css, Keyframes } from 'styled-components';
-import { NavBarItemInterface } from './index';
-import MenuItem from './MenuItem';
+import { NavBarItemInterface } from '@/components/NavBar';
+import Item from '@/components/DropDownMenu/Item';
 
-interface DropDownMenuProps {
+interface ListProps {
   menuItems: NavBarItemInterface[];
   dropDownTrigger: boolean;
   animation: Keyframes;
 }
 
-const DropDownMenu: React.FC<DropDownMenuProps> = ({
-  menuItems,
-  animation,
-}) => {
+const List = ({ menuItems, animation }: ListProps) => {
   return (
     <>
       <Wrapper animation={animation}>
         <Container>
           {menuItems.map((menuItem, index) => (
-            <MenuItem key={index} menuItem={menuItem} />
+            <Item key={index} menuItem={menuItem} />
           ))}
         </Container>
       </Wrapper>
@@ -25,14 +22,14 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
   );
 };
 
-export default DropDownMenu;
+export default List;
 
 const Wrapper = styled.div<{ animation: Keyframes }>`
   position: absolute;
   display: flex;
   flex-direction: column;
   top: calc(100% + 0.25rem);
-  left: 0px;
+  right: 0px;
   ${({ animation }) => {
     return css`
       animation: ${animation} 0.3s ease-in-out;

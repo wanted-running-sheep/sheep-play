@@ -6,7 +6,8 @@ import SearchedList from './SearchedList';
 import { useMovieModel } from '@/modules/models/useMovieModel';
 
 import styled from 'styled-components';
-import Search from '@/assets/icons/Search';
+
+import DropDownMenu from '@/components/DropDownMenu/';
 
 const MovieSearch = () => {
   const [inputText, setInputText] = useState<string | undefined>('');
@@ -36,17 +37,23 @@ const MovieSearch = () => {
           ref={inputRef}
           placeholder="Search"
         />
-        <Search />
+
+        {inputText && <SearchedList inputText={inputText} movies={movies} />}
       </SearchWrap>
-      {inputText && <SearchedList inputText={inputText} movies={movies} />}
+
+      <DropDownMenu />
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const SearchWrap = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   border-radius: 4px;
 
@@ -57,6 +64,7 @@ const SearchWrap = styled.div`
 
   background-color: ${({ theme }) => theme.color.background.indigo};
 
+  position: relative;
   svg {
     width: 18px;
     color: ${({ theme }) => theme.color.font.gray};

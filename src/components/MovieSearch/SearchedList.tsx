@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import styled from 'styled-components';
 import { MovieProps } from 'Movies';
 import getFilteredMovies from '@/utils/recommend-movie-list';
@@ -56,8 +55,10 @@ const Wrapper = styled.div`
   max-width: 430px;
   padding: 10px;
   border-radius: 4px;
-
   background-color: ${({ theme }) => theme.color.background.indigo};
+  position: absolute;
+  top: 100%;
+  z-index: 1;
 `;
 
 const GuideText = styled.span`

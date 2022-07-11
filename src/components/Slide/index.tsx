@@ -1,48 +1,39 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components';
 import RightDirection from '@/assets/icons/RightDirection';
 import LeftDirection from '@/assets/icons/LeftDirection';
 import { MovieProps } from 'Movies';
+import useSlide from '@/hooks/useSlide';
 
-const Slide = ({ movies }: { movies: MovieProps[] }) => {
-  const TOTAL_SLIDES = 9;
-  const [currentSlide, setCurrentSlide] = useState(0);
+interface SlideProps {
+  movies: MovieProps[];
+}
+
+const Slide = ({ movies }: SlideProps) => {
   const slideRef = useRef<HTMLDivElement>(null);
+  const { totalSildes, currentSlide, setCurrentSlide } = useSlide(slideRef);
 
-  // const [validNextBtn, setValidNextBtn] = useState(true);
-  // const [validPrevBtn, setValidPrevBtn] = useState(true);
-
-  const NextSlide = () => {
-    if (currentSlide >= TOTAL_SLIDES) {
+  const onClickSlide = (direction: number) => {
+    if (currentSlide + direction >= totalSildes) {
       setCurrentSlide(0);
-    } else {
-      setCurrentSlide(currentSlide + 1);
+      return;
     }
-  };
 
-  const PrevSlide = () => {
-    if (currentSlide === 0) {
-      setCurrentSlide(TOTAL_SLIDES);
-    } else {
-      setCurrentSlide(currentSlide - 1);
+    if (currentSlide + direction < 0) {
+      setCurrentSlide(totalSildes);
+      return;
     }
-  };
 
-  useEffect(() => {
-    const slide = slideRef.current;
-    if (slide) {
-      slide.style.transition = 'all 0.5s ease-in-out';
-      slide.style.transform = `translateX(-${currentSlide}00%)`;
-    }
-  }, [currentSlide]);
+    setCurrentSlide(currentSlide + direction);
+  };
 
   return (
     <Container>
       <Arrows>
-        <Button onClick={PrevSlide}>
+        <Button onClick={() => onClickSlide(-1)}>
           <LeftDirection />
         </Button>
-        <Button onClick={NextSlide}>
+        <Button onClick={() => onClickSlide(1)}>
           <RightDirection />
         </Button>
       </Arrows>
@@ -58,9 +49,12 @@ const Slide = ({ movies }: { movies: MovieProps[] }) => {
 export default Slide;
 
 const Container = styled.div`
+  background-color: ${({ theme }) => theme.color.background.indigo};
   width: 100%;
-  height: 500px;
+  height: 100%;
   overflow: hidden;
+  border-radius: 4px;
+  padding: 20px 10px 20px 10px;
 `;
 
 const Arrows = styled.div`
@@ -69,16 +63,21 @@ const Arrows = styled.div`
   column-gap: 10px;
   margin-bottom: 3em;
   svg {
-    width: 57px;
-    background-color: ${({ theme }) => theme.color.background.darkgray};
+    width: 30px;
     border-radius: 10px;
     cursor: pointer;
+    color: #abacb4;
   }
 `;
 
 const Button = styled.button`
   padding: 0;
-  background-color: ${({ theme }) => theme.color.background.white};
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.color.background.darkgray};
+
+  &:hover {
+    opacity: 0.6;
+  }
 `;
 
 const SlideWrapper = styled.div`
@@ -86,7 +85,7 @@ const SlideWrapper = styled.div`
   max-width: 250px;
   display: flex;
   align-items: center;
-  column-gap: 45px;
+  column-gap: 10px;
   margin-bottom: 2em;
 `;
 
@@ -95,6 +94,7 @@ const PosterImage = styled.img`
   height: 100%;
   object-fit: contain;
   transition: 0.2s;
+  cursor: pointer;
   &:hover {
     border: 5px solid ${({ theme }) => theme.color.border.lightblue};
     object-fit: cover;
