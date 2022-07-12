@@ -8,6 +8,12 @@ const GlobalStyles = createGlobalStyle`
    outline:none;
    border:none;
  }
+ ul{
+  list-style: none;
+ }
+ a {
+  text-decoration: none;
+ }
 `;
 
 export default GlobalStyles;
