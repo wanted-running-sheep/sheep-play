@@ -3,7 +3,7 @@ import { MovieProps } from 'Movies';
 import styled from 'styled-components';
 
 import Modal from './index';
-import { Close, Star, Add } from '@/assets/icons';
+import { Close, Star, Add, Delete } from '@/assets/icons';
 import { useMovieModel } from '@/modules/models/useMovieModel';
 import { toHoursAndMinutes } from '@/utils/timeConvert';
 interface MovieInfoProps {
@@ -12,7 +12,7 @@ interface MovieInfoProps {
 }
 const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
   const [selectedMovie, setSelectedMovie] = useState<MovieProps>();
-  const { getMovieById } = useMovieModel();
+  const { getMovieById, patchMovieById } = useMovieModel();
   useEffect(() => {
     const getMovie = async () => {
       const response = await getMovieById(`/${movieId}`);
@@ -20,6 +20,12 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
     };
     getMovie();
   }, []);
+
+  const toggleBookmark = () => {
+    const bookmarkMovie = { ...selectedMovie };
+    bookmarkMovie.like = !bookmarkMovie.like;
+    patchMovieById(movieId, bookmarkMovie);
+  };
 
   return (
     <Modal close={close}>
@@ -76,9 +82,18 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
           </Wrapper>
           <ButtonWrapper>
             <button>Watch</button>
-            <button>
-              <Add />
-              Add to My Bookmark
+            <button onClick={toggleBookmark}>
+              {selectedMovie.like ? (
+                <>
+                  <Delete />
+                  Delete Bookmark
+                </>
+              ) : (
+                <>
+                  <Add />
+                  Add to My Bookmark
+                </>
+              )}
             </button>
           </ButtonWrapper>
         </>
