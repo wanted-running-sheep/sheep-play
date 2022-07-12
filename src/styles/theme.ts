@@ -1,6 +1,5 @@
 import media from './media';
 import mixins from './mixins';
-import animation from './animation';
 
 const color = {
   background: {
@@ -31,6 +30,5 @@ export const theme = {
   media,
   mixins,
   zIndex,
-  animation,
 };
 export type Theme = typeof theme;
