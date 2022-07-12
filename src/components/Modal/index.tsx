@@ -26,7 +26,9 @@ const Wrapper = styled.div`
 const ModalBody = styled.div`
   position: relative;
   width: 80%;
-  height: 80%;
+  height: 85%;
+  max-width: 1200px;
+  max-height: 700px;
   margin: 0 auto;
   background: ${({ theme }) => theme.color.background.indigo};
   border-radius: 40px;

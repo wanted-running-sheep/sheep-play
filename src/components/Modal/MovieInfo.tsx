@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { MovieProps } from 'Movies';
 import styled from 'styled-components';
+
 import Modal from './index';
 import { Close, Star, Add } from '@/assets/icons';
 import { useMovieModel } from '@/modules/models/useMovieModel';
-import { MovieProps } from 'Movies';
+import { toHoursAndMinutes } from '@/utils/timeConvert';
 interface MovieInfoProps {
   close: () => void;
   movieId: number;
@@ -36,40 +38,39 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
                 <Title>
                   <div>
                     <p>{selectedMovie.year}</p>
-                    <p>{selectedMovie.runtime}</p>
+                    <p>{toHoursAndMinutes(selectedMovie.runtime)}</p>
                     <p>
-                      <Star color="#F4C518" /> {selectedMovie.rating}
+                      <Star color="#F4C518" /> {selectedMovie.rating} / 10
                     </p>
                   </div>
 
                   <h1>{selectedMovie.title}</h1>
                 </Title>
 
-                <div>
+                <GenreWrapper>
                   {selectedMovie.genres.map((genre, index) => (
                     <button key={index}>{genre}</button>
                   ))}
-                </div>
+                </GenreWrapper>
               </Header>
               <Article>
-                <p>
-                  {selectedMovie.summary ? (
-                    selectedMovie.summary
-                  ) : (
-                    <>
-                      <p>존재하는 줄거리가 없습니다.</p>
-                      <p>
-                        구글에서 검색한 결과가 궁금하다면{' '}
-                        <a
-                          href={`https://google.com/search?q=${selectedMovie.title}`}
-                        >
-                          여기
-                        </a>
-                        를 클릭하세요.
-                      </p>
-                    </>
-                  )}
-                </p>
+                {selectedMovie.summary ? (
+                  <p>${selectedMovie.summary}</p>
+                ) : (
+                  <>
+                    <p>존재하는 줄거리가 없습니다.</p>
+                    <p>
+                      구글에서 검색한 결과가 궁금하다면{' '}
+                      <a
+                        href={`https://google.com/search?q=${selectedMovie.title}`}
+                        target="_blank"
+                      >
+                        여기
+                      </a>
+                      를 클릭하세요.
+                    </p>
+                  </>
+                )}
               </Article>
             </Section>
           </Wrapper>
@@ -98,6 +99,10 @@ const BaseBackground = styled.div<{ baseSrc: string }>`
   border-radius: 40px 40px 0px 0px;
   padding: 25px;
   text-align: right;
+
+  ${({ theme }) => theme.media.tablet`
+    height: 250px;
+  `}
 `;
 const Wrapper = styled.div`
   position: absolute;
@@ -117,6 +122,7 @@ const Wrapper = styled.div`
     max-width: 230px;
     height: 345px;
     ${({ theme }) => theme.media.tablet`
+      max-width: 180px;
       width: 50%;
       height: auto;
     `}
@@ -132,8 +138,9 @@ const Header = styled.div`
   height: 215px;
   margin-bottom: 35px;
   display: flex;
-  flex-wrap: wrap;
   align-content: space-between;
+  flex-direction: column;
+  justify-content: flex-end;
 
   ${({ theme }) => theme.media.tablet`
     margin: 0px;
@@ -153,15 +160,21 @@ const Header = styled.div`
       font-size: 15px;
     `}
     ${({ theme }) => theme.media.tablet`
-      margin: 5px 0px 15px 0px;
       padding: 1px 5px;
       font-size: 12px;
+      margin-bottom: 3px;
     `}
   }
+`;
+const GenreWrapper = styled.div`
+  ${({ theme }) => theme.media.tablet`
+    margin: 5px 0px 15px 0px;
+  `}
 `;
 const Title = styled.div`
   h1 {
     margin-top: 3px;
+    margin-bottom: 20px;
     font-weight: 900;
     color: ${({ theme }) => theme.color.font.white};
     font-size: 55px;
@@ -176,6 +189,7 @@ const Title = styled.div`
     ${({ theme }) => theme.media.tablet`
       font-size: 6vw;
       line-height: 5.2vw;
+      margin-bottom:0px;
     `}
   }
   div {
@@ -188,6 +202,8 @@ const Title = styled.div`
       ${({ theme }) => theme.media.tablet`
         font-size: 15px;
         padding: 0px 7px;
+        height: 18px;
+        margin-bottom: 2px;
       `}
 
       &:first-child {
@@ -205,12 +221,14 @@ const Title = styled.div`
 `;
 const Article = styled.div`
   height: 220px;
+  overflow-y: auto;
   p {
     font-size: 18px;
     color: ${({ theme }) => theme.color.font.white};
 
     ${({ theme }) => theme.media.tablet`
       font-size: 15px;
+      // height: 220px;
     `}
   }
   a {
