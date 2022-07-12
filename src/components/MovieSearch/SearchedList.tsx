@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { MovieProps } from 'Movies';
-import getFilteredMovies from '@/utils/recommend-movie-list';
+import { getFilteredMovieTitles } from '@/utils/recommend-movie-list';
 
 interface searchListProps {
   inputText: string;
@@ -28,7 +28,8 @@ const SearchedList = ({
 
   useEffect(() => {
     console.log('inputText', inputText);
-    setRecommendedMovies(getFilteredMovies(filteredOptions));
+    setRecommendedMovies(getFilteredMovieTitles(filteredOptions));
+    setCurrentIndex(-1);
   }, [inputText]);
 
   useEffect(() => {

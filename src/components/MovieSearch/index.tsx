@@ -4,6 +4,7 @@ import SearchInput from './SearchInput';
 import SearchedList from './SearchedList';
 
 import { useMovieModel } from '@/modules/models/useMovieModel';
+import getFilteredMovies from '@/utils/recommend-movie-list';
 
 import styled from 'styled-components';
 
@@ -43,7 +44,14 @@ const MovieSearch = () => {
   };
 
   const requestMovieResult = (event: React.FormEvent) => {
-    console.log('제출', inputRef.current?.value);
+    if (inputRef.current) {
+      const requestTargetWord = inputRef.current?.value;
+      const searchedResult = getFilteredMovies({
+        inputText: requestTargetWord,
+        movies: movies,
+      });
+      console.log('제출', searchedResult);
+    }
   };
 
   return (
