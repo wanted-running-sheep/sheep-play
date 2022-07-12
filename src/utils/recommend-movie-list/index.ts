@@ -4,7 +4,7 @@ import createFuzzyMatcher from './createFuzzyMatcher';
 interface FilteredMoviesProps {
   inputText: string;
   movies: MovieProps[];
-  listCount: number;
+  listCount?: number;
 }
 
 export default function getFilteredMovies({
@@ -12,6 +12,17 @@ export default function getFilteredMovies({
   movies,
   listCount,
 }: FilteredMoviesProps) {
+  const regex = createFuzzyMatcher(inputText);
+  const filteredMovies = movies.filter((movie) => regex.test(movie.title));
+
+  return filteredMovies.slice(0, listCount);
+}
+
+export const getFilteredMovieTitles = ({
+  inputText,
+  movies,
+  listCount,
+}: FilteredMoviesProps) => {
   const regex = createFuzzyMatcher(inputText);
   const filteredMovies = movies
     .filter((movie) => regex.test(movie.title))
@@ -38,4 +49,4 @@ export default function getFilteredMovies({
     });
   filteredMovies.sort((a, b) => a.longestDistance - b.longestDistance);
   return filteredMovies.slice(0, listCount).map(({ title }) => title);
-}
+};

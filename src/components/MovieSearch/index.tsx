@@ -4,6 +4,7 @@ import SearchInput from './SearchInput';
 import SearchedList from './SearchedList';
 
 import { useMovieModel } from '@/modules/models/useMovieModel';
+import getFilteredMovies from '@/utils/recommend-movie-list';
 
 import styled from 'styled-components';
 
@@ -12,6 +13,8 @@ import DropDownMenu from '@/components/DropDownMenu/';
 const MovieSearch = () => {
   const [inputText, setInputText] = useState<string | undefined>('');
   const [tempText, setTempText] = useState<string | undefined>(inputText);
+  const [keyEvent, setKeyEvent] = useState<React.KeyboardEvent>();
+  const [currentFocusTitle, setCurrentFocusTitle] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const { getMovies, movies } = useMovieModel();
 
@@ -26,7 +29,29 @@ const MovieSearch = () => {
   }, [tempText]);
 
   const onChangeInput = () => {
-    setTempText(inputRef.current?.value);
+    if (inputRef.current) {
+      setTempText(inputRef.current.value);
+      setCurrentFocusTitle(inputRef.current.value);
+    }
+  };
+
+  const pushedKeyArrow = (event: React.KeyboardEvent) => {
+    setKeyEvent(event);
+  };
+
+  const handleFocusTitle = (title: string) => {
+    setCurrentFocusTitle(title);
+  };
+
+  const requestMovieResult = (event: React.FormEvent) => {
+    if (inputRef.current) {
+      const requestTargetWord = inputRef.current?.value;
+      const searchedResult = getFilteredMovies({
+        inputText: requestTargetWord,
+        movies: movies,
+      });
+      console.log('제출', searchedResult);
+    }
   };
 
   return (
@@ -36,9 +61,19 @@ const MovieSearch = () => {
           onChange={onChangeInput}
           ref={inputRef}
           placeholder="Search"
+          onKeyDown={pushedKeyArrow}
+          onSubmit={requestMovieResult}
+          value={currentFocusTitle}
         />
 
-        {inputText && <SearchedList inputText={inputText} movies={movies} />}
+        {inputText && (
+          <SearchedList
+            inputText={inputText}
+            movies={movies}
+            keyEvent={keyEvent}
+            handleFocusTitle={handleFocusTitle}
+          />
+        )}
       </SearchWrap>
 
       <DropDownMenu />
@@ -65,6 +100,7 @@ const SearchWrap = styled.div`
   background-color: ${({ theme }) => theme.color.background.indigo};
 
   position: relative;
+
   svg {
     width: 18px;
     color: ${({ theme }) => theme.color.font.gray};
