@@ -41,7 +41,7 @@ const Slide = ({ movies }: SlideProps) => {
     [isModalOpen]
   );
 
-  if (!movies.length && pathname === '/') return <NoData />;
+  if (!(movies.length && pathname === '/')) return <NoData />;
   return (
     <Container>
       {isModalOpen && (
