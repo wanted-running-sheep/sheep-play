@@ -4,19 +4,20 @@ import SearchInput from './SearchInput';
 import SearchedList from './SearchedList';
 
 import { useMovieModel } from '@/modules/models/useMovieModel';
-import getFilteredMovies from '@/utils/recommend-movie-list';
+import { useKeywordModel } from '@/modules/models/useKeywordModel';
 
 import styled from 'styled-components';
 
 import DropDownMenu from '@/components/DropDownMenu/';
 
 const MovieSearch = () => {
-  const [inputText, setInputText] = useState<string | undefined>('');
-  const [tempText, setTempText] = useState<string | undefined>(inputText);
+  const [inputText, setInputText] = useState<string>('');
+  const [tempText, setTempText] = useState<string>(inputText);
   const [keyEvent, setKeyEvent] = useState<React.KeyboardEvent>();
   const [currentFocusTitle, setCurrentFocusTitle] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const { getMovies, movies } = useMovieModel();
+  const { getRecommendMovies } = useKeywordModel();
 
   useEffect(() => {
     getMovies();
@@ -46,7 +47,7 @@ const MovieSearch = () => {
   const requestMovieResult = (event: React.FormEvent) => {
     if (inputRef.current) {
       const requestTargetWord = inputRef.current?.value;
-      const searchedResult = getFilteredMovies({
+      const searchedResult = getRecommendMovies({
         inputText: requestTargetWord,
         movies: movies,
       });

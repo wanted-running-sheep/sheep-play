@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { MovieProps } from 'Movies';
-import { getFilteredMovieTitles } from '@/utils/recommend-movie-list';
+import { useKeywordModel } from '@/modules/models/useKeywordModel';
 
 interface searchListProps {
   inputText: string;
@@ -16,6 +16,7 @@ const SearchedList = ({
   keyEvent,
   handleFocusTitle,
 }: searchListProps) => {
+  const { getRecommendMoviesTitle } = useKeywordModel();
   const [recommendedMovies, setRecommendedMovies] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const listRef = useRef<HTMLUListElement>(null);
@@ -28,7 +29,7 @@ const SearchedList = ({
 
   useEffect(() => {
     console.log('inputText', inputText);
-    setRecommendedMovies(getFilteredMovieTitles(filteredOptions));
+    setRecommendedMovies(getRecommendMoviesTitle(filteredOptions));
     setCurrentIndex(-1);
   }, [inputText]);
 
