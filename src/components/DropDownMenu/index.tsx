@@ -1,34 +1,14 @@
 import { useState } from 'react';
-import styled, { keyframes, Keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { Search, Star, Menu } from '@/assets/icons';
-import { NavBarItemInterface } from '@/components/NavBar';
 import { useNavigate } from 'react-router-dom';
 import List from '@/components/DropDownMenu/List';
-
-const dropDownMountedAnimation = keyframes`
-  0% {
-      opacity: 0;
-  }
-  100% {
-      opacity: 1;
-  }
-`;
-const dropDownUnMountedAnimation = keyframes`
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-`;
+import { NavBarItemInterface } from 'navigation';
 
 const DropDownMenu = () => {
   const navigate = useNavigate();
   const [isMountedMenu, setIsMountedMenu] = useState(false);
-  const [animation, setAnimation] = useState<Keyframes>(
-    dropDownMountedAnimation
-  );
+  const [isAnimation, setIsAnimation] = useState(true);
 
   const navBarItems: NavBarItemInterface[] = [
     {
@@ -47,14 +27,13 @@ const DropDownMenu = () => {
     const TOGGLE_DELAYED = 250;
 
     if (isMountedMenu) {
-      setAnimation(dropDownUnMountedAnimation);
+      setIsAnimation(false);
       setTimeout(() => {
         setIsMountedMenu((prevToggle) => !prevToggle);
       }, TOGGLE_DELAYED);
       return;
     }
-
-    setAnimation(dropDownMountedAnimation);
+    setIsAnimation(true);
     setIsMountedMenu((prevToggle) => !prevToggle);
   };
 
@@ -62,11 +41,7 @@ const DropDownMenu = () => {
     <MenuContainer onClick={onToggleMenu}>
       <Menu />
       {isMountedMenu && (
-        <List
-          menuItems={navBarItems}
-          dropDownTrigger={isMountedMenu}
-          animation={animation}
-        />
+        <List menuItems={navBarItems} isAnimation={isAnimation} />
       )}
     </MenuContainer>
   );
