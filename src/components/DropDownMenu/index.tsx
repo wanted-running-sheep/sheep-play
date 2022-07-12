@@ -12,12 +12,12 @@ const DropDownMenu = () => {
 
   const navBarItems: NavBarItemInterface[] = [
     {
-      Icon: Search,
+      Icon: <Search />,
       title: 'Search',
       onClickLink: () => navigate('/'),
     },
     {
-      Icon: Star,
+      Icon: <Star />,
       title: 'Bookmark',
       onClickLink: () => navigate('/bookmark'),
     },
@@ -57,7 +57,6 @@ const MenuContainer = styled.div`
     width: 30px;
     height: 30px;
     cursor: pointer;
-
     &:hover {
       color: red
     }

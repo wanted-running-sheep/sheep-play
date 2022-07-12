@@ -9,34 +9,32 @@ const NavBar = () => {
 
   const navBarItems: NavBarItemInterface[] = [
     {
-      Icon: Search,
+      Icon: <Search />,
       title: 'Search',
       onClickLink: () => navigate('/'),
     },
     {
-      Icon: Star,
+      Icon: <Star />,
       title: 'Bookmark',
       onClickLink: () => navigate('/bookmark'),
     },
   ];
 
   return (
-    <>
-      <Wrapper>
-        <Container>
-          {navBarItems.map(({ Icon, title, onClickLink }) => {
-            return (
-              <Item
-                key={title}
-                Icon={Icon}
-                title={title}
-                onClickLink={onClickLink}
-              />
-            );
-          })}
-        </Container>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Container>
+        {navBarItems.map(({ Icon, title, onClickLink }) => {
+          return (
+            <Item
+              key={title}
+              Icon={Icon}
+              title={title}
+              onClickLink={onClickLink}
+            />
+          );
+        })}
+      </Container>
+    </Wrapper>
   );
 };
 

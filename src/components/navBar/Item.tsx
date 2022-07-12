@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface ItemProps {
-  Icon: () => JSX.Element;
+  Icon: JSX.Element;
   title: 'Search' | 'Bookmark';
   onClickLink: () => void;
 }
@@ -10,9 +10,7 @@ interface ItemProps {
 const Item: React.FC<ItemProps> = ({ Icon, title, onClickLink }) => {
   return (
     <ItemContainer onClick={onClickLink}>
-      <IconContainer>
-        <Icon />
-      </IconContainer>
+      <IconContainer>{Icon}</IconContainer>
       <ItemTitle>{title}</ItemTitle>
     </ItemContainer>
   );
