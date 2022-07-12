@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 import NavBar from '@/components/NavBar';
 import MovieSearch from '../MovieSearch';
+import InfiniteScroll from '@/components/InfiniteScroll';
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ const Layout = ({ children }: LayoutProps) => {
       <ContetContainer>
         <MovieSearch />
         {children}
+        <InfiniteScroll />
       </ContetContainer>
     </MainContainer>
   );
