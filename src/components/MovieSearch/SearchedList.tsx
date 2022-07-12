@@ -11,6 +11,10 @@ interface searchListProps {
   reqFilteredMoviesAndClear: (targetWord: string) => void;
 }
 
+const MSG_NOT_FOUND_MOVIE = '찾으려는 작품이 존재하지 않습니다.';
+const INIT_INDEX = -1;
+const AMOUNTS_OF_RECOMMENED_MOVIES = 10;
+
 const SearchedList = ({
   inputText,
   movies,
@@ -19,19 +23,18 @@ const SearchedList = ({
   reqFilteredMoviesAndClear,
 }: searchListProps) => {
   const [recommendedMovies, setRecommendedMovies] = useState<string[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const [currentIndex, setCurrentIndex] = useState<number>(INIT_INDEX);
   const listRef = useRef<HTMLUListElement>(null);
   const filteredOptions = {
     inputText: inputText,
     movies: movies,
-    listCount: 10,
+    listCount: AMOUNTS_OF_RECOMMENED_MOVIES,
   };
-  const MSG_NOT_FOUND_MOVIE = '찾으려는 작품이 존재하지 않습니다.';
 
   useEffect(() => {
     console.log('inputText', inputText);
     setRecommendedMovies(getFilteredMovieTitles(filteredOptions));
-    setCurrentIndex(-1);
+    setCurrentIndex(INIT_INDEX);
   }, [inputText]);
 
   useEffect(() => {
@@ -45,7 +48,7 @@ const SearchedList = ({
     }
   }, [currentIndex]);
 
-  const isVerifiedIndex = () => currentIndex !== -1;
+  const isVerifiedIndex = () => currentIndex !== INIT_INDEX;
 
   const createMarkup = (htmlElement: string) => {
     return { __html: htmlElement };
@@ -63,7 +66,7 @@ const SearchedList = ({
           if (currentIndex <= 0) setCurrentIndex(recommendedMovies.length - 1);
           break;
         case 'Escape':
-          setCurrentIndex(-1);
+          setCurrentIndex(INIT_INDEX);
           break;
       }
     }
@@ -73,6 +76,14 @@ const SearchedList = ({
     const clickedTitle = event.currentTarget.textContent;
     if (clickedTitle !== null) {
       reqFilteredMoviesAndClear(clickedTitle);
+    }
+  };
+
+  const handleMouseEnter = (event: React.MouseEvent<HTMLLIElement>) => {
+    if (event.currentTarget.parentElement !== null) {
+      const titleList = Array.from(event.currentTarget.parentElement.children);
+      const enteredTitle = event.currentTarget;
+      setCurrentIndex(titleList.indexOf(enteredTitle));
     }
   };
 
@@ -92,6 +103,7 @@ const SearchedList = ({
                 isFocus={currentIndex === index ? true : false}
                 isEmptyResult={false}
                 onClick={handleClickedTitle}
+                onMouseEnter={handleMouseEnter}
               >
                 <RecommendedText>
                   <div dangerouslySetInnerHTML={createMarkup(title)} />
