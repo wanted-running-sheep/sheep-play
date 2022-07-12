@@ -8,6 +8,7 @@ interface searchListProps {
   movies: MovieProps[];
   keyEvent?: React.KeyboardEvent;
   handleFocusTitle: (title: string) => void;
+  reqFilteredMoviesAndClear: (targetWord: string) => void;
 }
 
 const SearchedList = ({
@@ -15,6 +16,7 @@ const SearchedList = ({
   movies,
   keyEvent,
   handleFocusTitle,
+  reqFilteredMoviesAndClear,
 }: searchListProps) => {
   const [recommendedMovies, setRecommendedMovies] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
@@ -67,6 +69,13 @@ const SearchedList = ({
     }
   };
 
+  const handleClickedTitle = (event: React.MouseEvent<HTMLLIElement>) => {
+    const clickedTitle = event.currentTarget.textContent;
+    if (clickedTitle !== null) {
+      reqFilteredMoviesAndClear(clickedTitle);
+    }
+  };
+
   return (
     <Wrapper>
       <GuideText>추천 검색어</GuideText>
@@ -82,6 +91,7 @@ const SearchedList = ({
                 key={index}
                 isFocus={currentIndex === index ? true : false}
                 isEmptyResult={false}
+                onClick={handleClickedTitle}
               >
                 <RecommendedText>
                   <div dangerouslySetInnerHTML={createMarkup(title)} />

@@ -48,15 +48,19 @@ const MovieSearch = () => {
     setCurrentFocusTitle('');
   };
 
-  const requestMovieResult = (event: React.FormEvent) => {
+  const reqFilteredMoviesAndClear = (targetWord: string) => {
+    const searchedResult = getFilteredMovies({
+      inputText: targetWord,
+      movies: movies,
+    });
+    setSearchedMovies(searchedResult);
+    initSearchState();
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
     if (inputRef.current) {
-      const requestTargetWord = inputRef.current?.value;
-      const searchedResult = getFilteredMovies({
-        inputText: requestTargetWord,
-        movies: movies,
-      });
-      setSearchedMovies(searchedResult);
-      initSearchState();
+      const reqTargetWord = inputRef.current?.value;
+      reqFilteredMoviesAndClear(reqTargetWord);
     }
   };
 
@@ -68,7 +72,7 @@ const MovieSearch = () => {
           ref={inputRef}
           placeholder="Search"
           onKeyDown={pushedKeyArrow}
-          onSubmit={requestMovieResult}
+          onSubmit={handleSubmit}
           value={currentFocusTitle}
         />
 
@@ -78,6 +82,7 @@ const MovieSearch = () => {
             movies={movies}
             keyEvent={keyEvent}
             handleFocusTitle={handleFocusTitle}
+            reqFilteredMoviesAndClear={reqFilteredMoviesAndClear}
           />
         )}
       </SearchWrap>
