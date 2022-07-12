@@ -43,7 +43,7 @@ const Slide = ({ movies }: SlideProps) => {
 
   if (!movies.length && pathname === '/') return <NoData />;
   return (
-    <>
+    <Container>
       {isModalOpen && (
         <MovieInfo close={() => onClickToggleModal()} movieId={selectedMovie} />
       )}
@@ -57,38 +57,56 @@ const Slide = ({ movies }: SlideProps) => {
       </Arrows>
       <SlideWrapper ref={slideRef}>
         {movies?.map(({ id, large_cover_image, title }) => (
-          <PosterImage
-            key={id}
-            src={large_cover_image}
-            alt={title}
-            onClick={() => onClickToggleModal(id)}
-          />
+          <PosterImageWrapper key={id}>
+            <PosterImage
+              key={id}
+              src={large_cover_image}
+              alt={title}
+              onClick={() => onClickToggleModal(id)}
+            />
+          </PosterImageWrapper>
         ))}
       </SlideWrapper>
-    </>
+    </Container>
   );
 };
 
 export default Slide;
 
+const Container = styled.div`
+  background-color: ${({ theme }) => theme.color.background.indigo};
+  height: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 20px 10px 20px 10px;
+  ${({ theme }) => theme.media.mobile`
+    position: relative;
+    width: calc(100vw - 20px);
+    height: calc(100vh - 40px);
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+  `};
+`;
+
 const Arrows = styled.div`
   display: flex;
   justify-content: flex-end;
   column-gap: 10px;
-  margin-bottom: 3em;
   svg {
     width: 30px;
     border-radius: 10px;
     cursor: pointer;
     color: #abacb4;
   }
+  ${({ theme }) => theme.media.mobile`
+    display: none;
+  `};
 `;
 
 const Button = styled.button`
   padding: 0;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.color.background.darkgray};
-
   &:hover {
     opacity: 0.6;
   }
@@ -97,21 +115,37 @@ const Button = styled.button`
 const SlideWrapper = styled.div`
   height: 330px;
   max-width: 250px;
+  width: 100%;
   display: flex;
   align-items: center;
   column-gap: 10px;
-  margin-bottom: 2em;
+  margin: 3em 0;
+  ${({ theme }) => theme.media.mobile`
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  `};
+`;
+
+const PosterImageWrapper = styled.div`
+  width: 250px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  transition: 0.2s;
+  &:hover {
+    height: 400px;
+  }
 `;
 
 const PosterImage = styled.img`
-  width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   transition: 0.2s;
   cursor: pointer;
   &:hover {
     border: 5px solid ${({ theme }) => theme.color.border.lightblue};
-    object-fit: cover;
-    height: 400px;
   }
 `;

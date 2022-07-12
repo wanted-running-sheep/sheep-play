@@ -15,13 +15,13 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <MainContainer>
       <NavBar />
-      <ContetContainer>
+      <ContentContainer>
         <SearchContainer>
           <DropDownMenu />
           {pathname === '/' && <MovieSearch />}
         </SearchContainer>
         <MovieContainer>{children}</MovieContainer>
-      </ContetContainer>
+      </ContentContainer>
     </MainContainer>
   );
 };
@@ -38,11 +38,10 @@ const MainContainer = styled.section`
   `}
 `;
 
-const ContetContainer = styled.main`
+const ContentContainer = styled.main`
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-  justify-content: space-between;
   padding: 10px 10px 10px 20px;
 
   ${({ theme }) => theme.media.mobile`
@@ -59,10 +58,6 @@ const SearchContainer = styled.div`
 `;
 
 const MovieContainer = styled.div`
-  background-color: ${({ theme }) => theme.color.background.indigo};
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  border-radius: 4px;
-  padding: 20px 10px 20px 10px;
+  height: 100%;
 `;
