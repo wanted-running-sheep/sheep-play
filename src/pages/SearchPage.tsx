@@ -1,17 +1,13 @@
-import { useEffect } from 'react';
 import Slide from '@/components/Slide';
-import { useMovieModel } from '@/modules/models/useMovieModel';
 import Layout from '@/components/Layout';
+import { useMovieState } from '@/context/MovieContext';
 
 const SearchPage = () => {
-  const { movies, getMovies } = useMovieModel();
-  useEffect(() => {
-    getMovies();
-  }, []);
+  /* const { movies } = useMovieState(); */
 
   return (
     <Layout>
-      <Slide movies={movies} />
+      <Slide /* movies={movies}  */ />
     </Layout>
   );
 };

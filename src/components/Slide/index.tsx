@@ -2,14 +2,12 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import RightDirection from '@/assets/icons/RightDirection';
 import LeftDirection from '@/assets/icons/LeftDirection';
-import { MovieProps } from 'Movies';
 import useSlide from '@/hooks/useSlide';
+import { useMovieState } from '@/context/MovieContext';
 
-interface SlideProps {
-  movies: MovieProps[];
-}
+const Slide = () => {
+  const { movies } = useMovieState();
 
-const Slide = ({ movies }: SlideProps) => {
   const slideRef = useRef<HTMLDivElement>(null);
   const { totalSildes, currentSlide, setCurrentSlide } = useSlide(slideRef);
 
@@ -27,6 +25,7 @@ const Slide = ({ movies }: SlideProps) => {
     setCurrentSlide(currentSlide + direction);
   };
 
+  if (!movies.length) return null;
   return (
     <Container>
       <Arrows>
