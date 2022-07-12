@@ -12,6 +12,8 @@ import DropDownMenu from '@/components/DropDownMenu/';
 const MovieSearch = () => {
   const [inputText, setInputText] = useState<string | undefined>('');
   const [tempText, setTempText] = useState<string | undefined>(inputText);
+  const [keyEvent, setKeyEvent] = useState<React.KeyboardEvent>();
+  const [currentFocusTitle, setCurrentFocusTitle] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const { getMovies, movies } = useMovieModel();
 
@@ -26,7 +28,22 @@ const MovieSearch = () => {
   }, [tempText]);
 
   const onChangeInput = () => {
-    setTempText(inputRef.current?.value);
+    if (inputRef.current) {
+      setTempText(inputRef.current.value);
+      setCurrentFocusTitle(inputRef.current.value);
+    }
+  };
+
+  const pushedKeyArrow = (event: React.KeyboardEvent) => {
+    setKeyEvent(event);
+  };
+
+  const handleFocusTitle = (title: string) => {
+    setCurrentFocusTitle(title);
+  };
+
+  const requestMovieResult = (event: React.FormEvent) => {
+    console.log('제출', inputRef.current?.value);
   };
 
   return (
@@ -36,9 +53,19 @@ const MovieSearch = () => {
           onChange={onChangeInput}
           ref={inputRef}
           placeholder="Search"
+          onKeyDown={pushedKeyArrow}
+          onSubmit={requestMovieResult}
+          value={currentFocusTitle}
         />
 
-        {inputText && <SearchedList inputText={inputText} movies={movies} />}
+        {inputText && (
+          <SearchedList
+            inputText={inputText}
+            movies={movies}
+            keyEvent={keyEvent}
+            handleFocusTitle={handleFocusTitle}
+          />
+        )}
       </SearchWrap>
 
       <DropDownMenu />
@@ -65,6 +92,7 @@ const SearchWrap = styled.div`
   background-color: ${({ theme }) => theme.color.background.indigo};
 
   position: relative;
+
   svg {
     width: 18px;
     color: ${({ theme }) => theme.color.font.gray};
