@@ -1,7 +1,12 @@
 import Router from '@/routes';
+import { MoiveContextProvider } from './context/MovieContext';
 
 const App = () => {
-  return <Router />;
+  return (
+    <MoiveContextProvider>
+      <Router />
+    </MoiveContextProvider>
+  );
 };
 
 export default App;

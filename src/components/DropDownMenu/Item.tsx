@@ -10,9 +10,7 @@ const Item = ({ menuItem }: ItemProps) => {
   return (
     <Container onClick={onClickLink}>
       <ItemTitle>{title}</ItemTitle>
-      <IconContainer>
-        <Icon />
-      </IconContainer>
+      <IconContainer>{Icon}</IconContainer>
     </Container>
   );
 };

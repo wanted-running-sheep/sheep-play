@@ -75,8 +75,6 @@ const MovieSearch = () => {
           />
         )}
       </SearchWrap>
-
-      <DropDownMenu />
     </Wrapper>
   );
 };
@@ -84,6 +82,7 @@ const MovieSearch = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-grow: 1;
 `;
 
 const SearchWrap = styled.div`

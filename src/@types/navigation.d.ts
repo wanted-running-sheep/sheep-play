@@ -1,6 +1,6 @@
 declare module 'navigation' {
   interface NavBarItemInterface {
-    Icon: () => JSX.Element;
+    Icon: JSX.Element;
     title: 'Search' | 'Bookmark';
     onClickLink: () => void;
   }

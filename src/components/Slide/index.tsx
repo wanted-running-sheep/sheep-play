@@ -2,14 +2,17 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import RightDirection from '@/assets/icons/RightDirection';
 import LeftDirection from '@/assets/icons/LeftDirection';
-import { MovieProps } from 'Movies';
 import useSlide from '@/hooks/useSlide';
+import { MovieProps } from 'Movies';
+import NoData from '../Bookmark/NoData';
+import { useLocation } from 'react-router-dom';
 
 interface SlideProps {
   movies: MovieProps[];
 }
-
 const Slide = ({ movies }: SlideProps) => {
+  const { pathname } = useLocation();
+
   const slideRef = useRef<HTMLDivElement>(null);
   const { totalSildes, currentSlide, setCurrentSlide } = useSlide(slideRef);
 
@@ -27,8 +30,9 @@ const Slide = ({ movies }: SlideProps) => {
     setCurrentSlide(currentSlide + direction);
   };
 
+  if (!movies.length) return pathname === '/' ? null : <NoData />;
   return (
-    <Container>
+    <>
       <Arrows>
         <Button onClick={() => onClickSlide(-1)}>
           <LeftDirection />
@@ -42,20 +46,11 @@ const Slide = ({ movies }: SlideProps) => {
           <PosterImage key={id} src={large_cover_image} alt={title} />
         ))}
       </SlideWrapper>
-    </Container>
+    </>
   );
 };
 
 export default Slide;
-
-const Container = styled.div`
-  background-color: ${({ theme }) => theme.color.background.indigo};
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 4px;
-  padding: 20px 10px 20px 10px;
-`;
 
 const Arrows = styled.div`
   display: flex;

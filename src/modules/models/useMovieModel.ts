@@ -24,6 +24,7 @@ export const useMovieModel = () => {
 
   return {
     movies,
+    setMovies,
     getMovies,
     patchMovieById,
   };

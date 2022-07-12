@@ -9,15 +9,13 @@ interface ListProps {
 
 const List = ({ menuItems, isAnimation }: ListProps) => {
   return (
-    <>
-      <Wrapper isAnimation={isAnimation}>
-        <Container>
-          {menuItems.map((menuItem, index) => (
-            <Item key={index} menuItem={menuItem} />
-          ))}
-        </Container>
-      </Wrapper>
-    </>
+    <Wrapper isAnimation={isAnimation}>
+      <Container>
+        {menuItems.map((menuItem, index) => (
+          <Item key={index} menuItem={menuItem} />
+        ))}
+      </Container>
+    </Wrapper>
   );
 };
 
