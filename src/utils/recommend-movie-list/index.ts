@@ -7,18 +7,17 @@ interface FilteredMoviesProps {
   listCount?: number;
 }
 
-export default function getFilteredMovies({
-  inputText,
-  movies,
-  listCount,
-}: FilteredMoviesProps) {
-  const regex = createFuzzyMatcher(inputText);
-  const filteredMovies = movies.filter((movie) => regex.test(movie.title));
-
-  return filteredMovies.slice(0, listCount);
+export default function getFilteredMovies(
+  filterOptions: FilteredMoviesProps
+): MovieProps[] {
+  return getMoviesInfo(filterOptions).map(({ filteredMovie }) => filteredMovie);
 }
 
-export const getFilteredMovieTitles = ({
+export const getFilteredMovieTitles = (filterOptions: FilteredMoviesProps) => {
+  return getMoviesInfo(filterOptions).map(({ title }) => title);
+};
+
+const getMoviesInfo = ({
   inputText,
   movies,
   listCount,
@@ -26,10 +25,10 @@ export const getFilteredMovieTitles = ({
   const regex = createFuzzyMatcher(inputText);
   const filteredMovies = movies
     .filter((movie) => regex.test(movie.title))
-    .map((row) => {
+    .map((filteredMovie) => {
       let longestDistance = 0;
 
-      const title = row.title.replace(regex, (match, ...groups) => {
+      const title = filteredMovie.title.replace(regex, (match, ...groups) => {
         const letters = groups.slice(0, inputText.length);
         let lastIndex = 0;
         let highlighted: string[] = [];
@@ -45,8 +44,10 @@ export const getFilteredMovieTitles = ({
         return highlighted.join('');
       });
 
-      return { title, longestDistance };
+      return { filteredMovie, title, longestDistance };
     });
+
   filteredMovies.sort((a, b) => a.longestDistance - b.longestDistance);
-  return filteredMovies.slice(0, listCount).map(({ title }) => title);
+
+  return filteredMovies.slice(0, listCount);
 };

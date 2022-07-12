@@ -5,10 +5,9 @@ import SearchedList from './SearchedList';
 
 import { useMovieModel } from '@/modules/models/useMovieModel';
 import getFilteredMovies from '@/utils/recommend-movie-list';
+import { useMovieState } from '@/context/MovieContext';
 
 import styled from 'styled-components';
-
-import DropDownMenu from '@/components/DropDownMenu/';
 
 const MovieSearch = () => {
   const [inputText, setInputText] = useState<string | undefined>('');
@@ -17,6 +16,7 @@ const MovieSearch = () => {
   const [currentFocusTitle, setCurrentFocusTitle] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const { getMovies, movies } = useMovieModel();
+  const { setSearchedMovies } = useMovieState();
 
   useEffect(() => {
     getMovies();
@@ -43,14 +43,24 @@ const MovieSearch = () => {
     setCurrentFocusTitle(title);
   };
 
-  const requestMovieResult = (event: React.FormEvent) => {
+  const initSearchState = () => {
+    setInputText('');
+    setCurrentFocusTitle('');
+  };
+
+  const reqFilteredMoviesAndClear = (targetWord: string) => {
+    const searchedResult = getFilteredMovies({
+      inputText: targetWord,
+      movies: movies,
+    });
+    setSearchedMovies(searchedResult);
+    initSearchState();
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
     if (inputRef.current) {
-      const requestTargetWord = inputRef.current?.value;
-      const searchedResult = getFilteredMovies({
-        inputText: requestTargetWord,
-        movies: movies,
-      });
-      console.log('제출', searchedResult);
+      const reqTargetWord = inputRef.current?.value;
+      reqFilteredMoviesAndClear(reqTargetWord);
     }
   };
 
@@ -62,7 +72,7 @@ const MovieSearch = () => {
           ref={inputRef}
           placeholder="Search"
           onKeyDown={pushedKeyArrow}
-          onSubmit={requestMovieResult}
+          onSubmit={handleSubmit}
           value={currentFocusTitle}
         />
 
@@ -72,6 +82,7 @@ const MovieSearch = () => {
             movies={movies}
             keyEvent={keyEvent}
             handleFocusTitle={handleFocusTitle}
+            reqFilteredMoviesAndClear={reqFilteredMoviesAndClear}
           />
         )}
       </SearchWrap>
