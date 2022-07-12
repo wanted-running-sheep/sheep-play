@@ -79,6 +79,11 @@ const Container = styled.div`
   overflow: hidden;
   border-radius: 4px;
   padding: 20px 10px 20px 10px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   ${({ theme }) => theme.media.mobile`
     position: relative;
     width: calc(100vw - 20px);
@@ -123,9 +128,7 @@ const SlideWrapper = styled.div`
   ${({ theme }) => theme.media.mobile`
     position: absolute;
     margin: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    ({ theme }) => theme.mixins.transformCenter();
   `};
 `;
 
