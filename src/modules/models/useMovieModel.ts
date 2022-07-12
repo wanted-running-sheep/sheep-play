@@ -13,6 +13,11 @@ export const useMovieModel = () => {
     }
   };
 
+  const getMovieById = async (url: string = '') => {
+    const response = await movieRequest.get(url);
+    if (response) return response.data;
+  };
+
   const getMovies = async () => {
     const response = await movieRequest.get('');
     updateMovies(response);
@@ -25,6 +30,7 @@ export const useMovieModel = () => {
   return {
     movies,
     setMovies,
+    getMovieById,
     getMovies,
     patchMovieById,
   };

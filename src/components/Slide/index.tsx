@@ -1,9 +1,10 @@
-import { useRef } from 'react';
-import styled from 'styled-components';
-import RightDirection from '@/assets/icons/RightDirection';
-import LeftDirection from '@/assets/icons/LeftDirection';
-import useSlide from '@/hooks/useSlide';
+import { useRef, useState, useCallback } from 'react';
 import { MovieProps } from 'Movies';
+import styled from 'styled-components';
+import useSlide from '@/hooks/useSlide';
+import { RightDirection, LeftDirection } from '@/assets/icons';
+import MovieInfo from '@/components/Modal/MovieInfo';
+
 import NoData from '../Bookmark/NoData';
 import { useLocation } from 'react-router-dom';
 
@@ -12,6 +13,8 @@ interface SlideProps {
 }
 const Slide = ({ movies }: SlideProps) => {
   const { pathname } = useLocation();
+  const [selectedMovie, setSelectedMovie] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const slideRef = useRef<HTMLDivElement>(null);
   const { totalSildes, currentSlide, setCurrentSlide } = useSlide(slideRef);
@@ -30,9 +33,20 @@ const Slide = ({ movies }: SlideProps) => {
     setCurrentSlide(currentSlide + direction);
   };
 
-  if (!movies.length) return pathname === '/' ? null : <NoData />;
+  const onClickToggleModal = useCallback(
+    (id?: number) => {
+      if (id) setSelectedMovie(id);
+      setIsModalOpen(!isModalOpen);
+    },
+    [isModalOpen]
+  );
+
+  if (!movies.length && pathname === '/') return <NoData />;
   return (
     <>
+      {isModalOpen && (
+        <MovieInfo close={() => onClickToggleModal()} movieId={selectedMovie} />
+      )}
       <Arrows>
         <Button onClick={() => onClickSlide(-1)}>
           <LeftDirection />
@@ -43,7 +57,12 @@ const Slide = ({ movies }: SlideProps) => {
       </Arrows>
       <SlideWrapper ref={slideRef}>
         {movies?.map(({ id, large_cover_image, title }) => (
-          <PosterImage key={id} src={large_cover_image} alt={title} />
+          <PosterImage
+            key={id}
+            src={large_cover_image}
+            alt={title}
+            onClick={() => onClickToggleModal(id)}
+          />
         ))}
       </SlideWrapper>
     </>

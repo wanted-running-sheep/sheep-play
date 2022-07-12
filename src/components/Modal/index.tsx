@@ -3,10 +3,9 @@ import styled from 'styled-components';
 interface ModalProps {
   close: () => void;
   children?: JSX.Element | JSX.Element[];
-  background?: URL;
 }
 
-const Modal: React.FC<ModalProps> = ({ close, children, background }) => {
+const Modal: React.FC<ModalProps> = ({ close, children }) => {
   return (
     <Wrapper onClick={close}>
       <ModalBody onClick={(e) => e.stopPropagation()}>{children}</ModalBody>
@@ -25,13 +24,18 @@ const Wrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
 `;
 const ModalBody = styled.div`
-  position: absolute;
-  width: 70%;
+  position: relative;
+  width: 80%;
   height: 80%;
   margin: 0 auto;
-  background: ${({ theme }) => theme.color.background.white};
-  background-image: url(background);
+  background: ${({ theme }) => theme.color.background.indigo};
   border-radius: 40px;
+  ${({ theme }) => theme.media.desktop`
+    width: 95%;
+  `}
+  ${({ theme }) => theme.media.tablet`
+    height: 95%;
+  `}
 `;
 
 export default Modal;

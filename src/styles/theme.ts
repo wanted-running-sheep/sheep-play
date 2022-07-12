@@ -14,11 +14,15 @@ const color = {
     white: '#FFFFFF',
     lightgray: '#C3C3C3',
     gray: '#81838E',
+    lightblue: '#9896FF',
   },
   border: {
     white: '#FFFFFF',
     lightgray: '#C3C3C3',
     lightblue: '#9896FF',
+  },
+  button: {
+    darkgray: '#555555',
   },
 };
 
