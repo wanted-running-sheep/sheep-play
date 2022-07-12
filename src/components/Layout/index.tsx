@@ -30,6 +30,7 @@ export default Layout;
 
 const MainContainer = styled.section`
   display: flex;
+  width: 100vw;
   height: 100vh;
   background-color: ${({ theme }) => theme.color.background.primary};
   ${({ theme }) => theme.media.mobile`
@@ -40,10 +41,10 @@ const MainContainer = styled.section`
 
 const ContentContainer = styled.main`
   display: flex;
+  width: calc(100vw - 250px);
   flex-grow: 1;
   flex-direction: column;
   padding: 10px 10px 10px 20px;
-
   ${({ theme }) => theme.media.mobile`
     padding: 0px;
   `}
@@ -58,6 +59,19 @@ const SearchContainer = styled.div`
 `;
 
 const MovieContainer = styled.div`
-  width: 100%;
+  background-color: ${({ theme }) => theme.color.background.indigo};
   height: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 20px 10px 20px 10px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  ${({ theme }) => theme.media.mobile`
+    width: calc(100vw - 20px);
+    height: calc(100vh - 40px);
+  `};
 `;
