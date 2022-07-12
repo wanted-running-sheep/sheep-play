@@ -7,7 +7,7 @@ export class HttpRequest {
     this.service = service;
   }
 
-  get(url: string) {
+  get(url: string = '') {
     return this.service.get(url).catch((error) => {
       console.log('error: ', error);
     });

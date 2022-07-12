@@ -1,15 +1,18 @@
-import { useRef } from 'react';
-import styled from 'styled-components';
-import RightDirection from '@/assets/icons/RightDirection';
-import LeftDirection from '@/assets/icons/LeftDirection';
+import { useRef, useState, useCallback } from 'react';
 import { MovieProps } from 'Movies';
+import styled from 'styled-components';
 import useSlide from '@/hooks/useSlide';
+import { RightDirection, LeftDirection } from '@/assets/icons';
+import MovieInfo from '@/components/Modal/MovieInfo';
 
 interface SlideProps {
   movies: MovieProps[];
 }
 
 const Slide = ({ movies }: SlideProps) => {
+  const [selectedMovie, setSelectedMovie] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const slideRef = useRef<HTMLDivElement>(null);
   const { totalSildes, currentSlide, setCurrentSlide } = useSlide(slideRef);
 
@@ -27,8 +30,19 @@ const Slide = ({ movies }: SlideProps) => {
     setCurrentSlide(currentSlide + direction);
   };
 
+  const onClickToggleModal = useCallback(
+    (id?: number) => {
+      if (id) setSelectedMovie(id);
+      setIsModalOpen(!isModalOpen);
+    },
+    [isModalOpen]
+  );
+
   return (
     <Container>
+      {isModalOpen && (
+        <MovieInfo close={() => onClickToggleModal()} movieId={selectedMovie} />
+      )}
       <Arrows>
         <Button onClick={() => onClickSlide(-1)}>
           <LeftDirection />
@@ -39,7 +53,12 @@ const Slide = ({ movies }: SlideProps) => {
       </Arrows>
       <SlideWrapper ref={slideRef}>
         {movies?.map(({ id, large_cover_image, title }) => (
-          <PosterImage key={id} src={large_cover_image} alt={title} />
+          <PosterImage
+            key={id}
+            src={large_cover_image}
+            alt={title}
+            onClick={() => onClickToggleModal(id)}
+          />
         ))}
       </SlideWrapper>
     </Container>

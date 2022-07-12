@@ -1,52 +1,87 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from './index';
-import { Close, Star } from '@/assets/icons';
-
+import { Close, Star, Add } from '@/assets/icons';
+import { useMovieModel } from '@/modules/models/useMovieModel';
+import { MovieProps } from 'Movies';
 interface MovieInfoProps {
   close: () => void;
+  movieId: number;
 }
-const MovieInfo: React.FC<MovieInfoProps> = ({ close }) => {
-  const movie = {
-    title: 'The Fate of the Furious JOkerJOkerJOkerJOker',
-    year: 2017,
-    rating: 6.6,
-    runtime: 136,
-    background_image:
-      'https://yts.mx/assets/images/movies/the_fate_of_the_furious_2017/background.jpg',
-    medium_cover_image:
-      'https://yts.mx/assets/images/movies/the_fate_of_the_furious_2017/medium-cover.jpg',
-    genres: ['Action', 'Adventure', 'Crime', 'Thriller'],
-  };
+const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
+  const [selectedMovie, setSelectedMovie] = useState<MovieProps>();
+  const { getMovieById } = useMovieModel();
+  useEffect(() => {
+    const getMovie = async () => {
+      const response = await getMovieById(`/${movieId}`);
+      setSelectedMovie(response);
+    };
+    getMovie();
+  }, []);
+
   return (
     <Modal close={close}>
-      <BaseBackground baseSrc={movie.background_image}>
-        <Close close={close} />
-      </BaseBackground>
-      <Wrapper>
-        <img src={movie.medium_cover_image} alt={movie.title} />
-        <Section>
-          <Infomation>
-            <Title>
-              <div>
-                <p>{movie.year}</p>
-                <p>{movie.runtime}</p>
+      {selectedMovie && (
+        <>
+          <BaseBackground baseSrc={selectedMovie.background_image}>
+            <Close close={close} />
+          </BaseBackground>
+          <Wrapper>
+            <img
+              src={selectedMovie.medium_cover_image}
+              alt={selectedMovie.title}
+            />
+            <Section>
+              <Header>
+                <Title>
+                  <div>
+                    <p>{selectedMovie.year}</p>
+                    <p>{selectedMovie.runtime}</p>
+                    <p>
+                      <Star color="#F4C518" /> {selectedMovie.rating}
+                    </p>
+                  </div>
+
+                  <h1>{selectedMovie.title}</h1>
+                </Title>
+
+                <div>
+                  {selectedMovie.genres.map((genre, index) => (
+                    <button key={index}>{genre}</button>
+                  ))}
+                </div>
+              </Header>
+              <Article>
                 <p>
-                  <Star color="#F4C518" /> {movie.rating}
+                  {selectedMovie.summary ? (
+                    selectedMovie.summary
+                  ) : (
+                    <>
+                      <p>존재하는 줄거리가 없습니다.</p>
+                      <p>
+                        구글에서 검색한 결과가 궁금하다면{' '}
+                        <a
+                          href={`https://google.com/search?q=${selectedMovie.title}`}
+                        >
+                          여기
+                        </a>
+                        를 클릭하세요.
+                      </p>
+                    </>
+                  )}
                 </p>
-              </div>
-
-              <h1>{movie.title}</h1>
-            </Title>
-
-            <div>
-              {movie.genres.map((genre, index) => (
-                <button key={index}>{genre}</button>
-              ))}
-            </div>
-          </Infomation>
-        </Section>
-      </Wrapper>
+              </Article>
+            </Section>
+          </Wrapper>
+          <ButtonWrapper>
+            <button>Watch</button>
+            <button>
+              <Add />
+              Add to My Bookmark
+            </button>
+          </ButtonWrapper>
+        </>
+      )}
     </Modal>
   );
 };
@@ -54,6 +89,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close }) => {
 export default MovieInfo;
 
 const BaseBackground = styled.div<{ baseSrc: string }>`
+  position: absolute;
   ${({ theme }) => theme.mixins.backgroundImage()}
   width: 100%;
   height: 350px;
@@ -64,24 +100,46 @@ const BaseBackground = styled.div<{ baseSrc: string }>`
   text-align: right;
 `;
 const Wrapper = styled.div`
+  position: absolute;
   padding: 0px 70px;
-  margin-top: -250px;
   display: flex;
+  top: 100px;
+  ${({ theme }) => theme.media.desktop`
+    padding: 0px 30px;
+  `}
+  ${({ theme }) => theme.media.tablet`
+    display: block;
+    top: 50px;
+  `}
 
   img {
     ${({ theme }) => theme.mixins.boxShadow()}
-    width: 230px;
+    max-width: 230px;
     height: 345px;
+    ${({ theme }) => theme.media.tablet`
+      width: 50%;
+      height: auto;
+    `}
   }
 `;
 const Section = styled.div`
   padding: 15px 20px;
+  ${({ theme }) => theme.media.tablet`
+    padding: 8px 0px;
+  `}
 `;
-const Infomation = styled.div`
-  height: 220px;
+const Header = styled.div`
+  height: 215px;
+  margin-bottom: 35px;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
+
+  ${({ theme }) => theme.media.tablet`
+    margin: 0px;
+    display:block;
+    height: auto;
+  `}
 
   button {
     margin-right: 7px;
@@ -90,17 +148,35 @@ const Infomation = styled.div`
     font-size: 20px;
     background: transparent;
     color: ${({ theme }) => theme.color.font.white};
-    border: 3px solid ${({ theme }) => theme.color.border.white};
+    border: 2px solid ${({ theme }) => theme.color.border.white};
+    ${({ theme }) => theme.media.desktop`
+      font-size: 15px;
+    `}
+    ${({ theme }) => theme.media.tablet`
+      margin: 5px 0px 15px 0px;
+      padding: 1px 5px;
+      font-size: 12px;
+    `}
   }
 `;
 const Title = styled.div`
   h1 {
-    margin-top: 20px;
+    margin-top: 3px;
     font-weight: 900;
     color: ${({ theme }) => theme.color.font.white};
     font-size: 55px;
-    line-height: 50px;
-    letter-spacing: -3px;
+    line-height: 45px;
+    letter-spacing: -1px;
+    flex: 1 1 100%;
+
+    ${({ theme }) => theme.media.desktop`
+      font-size: 4.8vw;
+      line-height: 4.5vw;
+    `}
+    ${({ theme }) => theme.media.tablet`
+      font-size: 6vw;
+      line-height: 5.2vw;
+    `}
   }
   div {
     display: flex;
@@ -109,14 +185,63 @@ const Title = styled.div`
       color: ${({ theme }) => theme.color.font.lightgray};
       font-size: 23px;
       padding: 0px 15px;
+      ${({ theme }) => theme.media.tablet`
+        font-size: 15px;
+        padding: 0px 7px;
+      `}
 
+      &:first-child {
+        padding-left: 0px;
+      }
       &:not(:last-child) {
-        border-right: 3px solid ${({ theme }) => theme.color.border.lightgray};
+        border-right: 2px solid ${({ theme }) => theme.color.border.lightgray};
       }
       svg {
         width: 28px;
         margin-right: 3px;
       }
+    }
+  }
+`;
+const Article = styled.div`
+  height: 220px;
+  p {
+    font-size: 18px;
+    color: ${({ theme }) => theme.color.font.white};
+
+    ${({ theme }) => theme.media.tablet`
+      font-size: 15px;
+    `}
+  }
+  a {
+    color: ${({ theme }) => theme.color.font.lightblue};
+    text-decoration: underline;
+  }
+`;
+const ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  text-align: right;
+  display: flex;
+
+  svg {
+    margin-right: 5px;
+  }
+  button {
+    ${({ theme }) => theme.mixins.flexBox()}
+    border-radius: 15px;
+    margin-left: 8px;
+    padding: 10px 25px;
+    font-size: 18px;
+    ${({ theme }) => theme.media.tablet`
+      font-size: 15px;
+      padding: 5px 15px;
+    `}
+
+    &:last-child {
+      background: ${({ theme }) => theme.color.button.darkgray};
+      color: ${({ theme }) => theme.color.font.lightgray};
     }
   }
 `;

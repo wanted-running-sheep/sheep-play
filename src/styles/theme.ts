@@ -1,5 +1,6 @@
 import media from './media';
 import mixins from './mixins';
+import animation from './animation';
 
 const color = {
   background: {
@@ -13,11 +14,15 @@ const color = {
     white: '#FFFFFF',
     lightgray: '#C3C3C3',
     gray: '#81838E',
+    lightblue: '#9896FF',
   },
   border: {
     white: '#FFFFFF',
     lightgray: '#C3C3C3',
     lightblue: '#9896FF',
+  },
+  button: {
+    darkgray: '#555555',
   },
 };
 
@@ -30,5 +35,6 @@ export const theme = {
   media,
   mixins,
   zIndex,
+  animation,
 };
 export type Theme = typeof theme;
