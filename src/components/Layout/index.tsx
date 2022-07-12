@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 import NavBar from '@/components/NavBar';
-import DropDownMenu from '../DropDownMenu';
+import DropDownMenu from '@/components/DropDownMenu';
 import { useLocation } from 'react-router-dom';
-import MovieSearch from '../MovieSearch';
+import MovieSearch from '@/components/MovieSearch';
 
 interface LayoutProps {
   children: ReactNode;

@@ -4,7 +4,7 @@ import RightDirection from '@/assets/icons/RightDirection';
 import LeftDirection from '@/assets/icons/LeftDirection';
 import useSlide from '@/hooks/useSlide';
 import { MovieProps } from 'Movies';
-import NoData from '../Bookmark/NoData';
+import NoData from '@/components/Bookmark/NoData';
 import { useLocation } from 'react-router-dom';
 
 interface SlideProps {
