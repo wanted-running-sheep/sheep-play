@@ -1,12 +1,11 @@
 import { useRef, useState, useCallback } from 'react';
 import { MovieProps } from 'Movies';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import useSlide from '@/hooks/useSlide';
 import { RightDirection, LeftDirection } from '@/assets/icons';
 import MovieInfo from '@/components/Modal/MovieInfo';
-
-import NoData from '../Bookmark/NoData';
-import { useLocation } from 'react-router-dom';
+import NoData from '@/components/Bookmark/NoData';
 
 interface SlideProps {
   movies: MovieProps[];
