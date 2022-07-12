@@ -5,11 +5,13 @@ import { MovieProps } from 'Movies';
 interface MovieContextInterface {
   movies: MovieProps[];
   addBookmarkById: (id: number) => void;
+  setSearchedMovies: (movies: MovieProps[]) => void;
 }
 
 const defaultContext: MovieContextInterface = {
   movies: [],
   addBookmarkById: () => {},
+  setSearchedMovies: () => {},
 };
 
 const MoiveContext = createContext<MovieContextInterface>(defaultContext);
@@ -24,11 +26,16 @@ export const MoiveContextProvider = ({ children }: { children: ReactNode }) => {
       })
     );
   };
+
+  const setSearchedMovies = (movies: MovieProps[]) => {
+    setMovies(movies);
+  };
+
   useEffect(() => {
     getMovies();
   }, []);
 
-  const value = { movies, addBookmarkById };
+  const value = { movies, addBookmarkById, setSearchedMovies };
 
   return (
     <MoiveContext.Provider value={value}>{children}</MoiveContext.Provider>

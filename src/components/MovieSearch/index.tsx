@@ -5,10 +5,9 @@ import SearchedList from './SearchedList';
 
 import { useMovieModel } from '@/modules/models/useMovieModel';
 import getFilteredMovies from '@/utils/recommend-movie-list';
+import { useMovieState } from '@/context/MovieContext';
 
 import styled from 'styled-components';
-
-import DropDownMenu from '@/components/DropDownMenu/';
 
 const MovieSearch = () => {
   const [inputText, setInputText] = useState<string | undefined>('');
@@ -17,6 +16,7 @@ const MovieSearch = () => {
   const [currentFocusTitle, setCurrentFocusTitle] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const { getMovies, movies } = useMovieModel();
+  const { setSearchedMovies } = useMovieState();
 
   useEffect(() => {
     getMovies();
@@ -43,6 +43,11 @@ const MovieSearch = () => {
     setCurrentFocusTitle(title);
   };
 
+  const initSearchState = () => {
+    setInputText('');
+    setCurrentFocusTitle('');
+  };
+
   const requestMovieResult = (event: React.FormEvent) => {
     if (inputRef.current) {
       const requestTargetWord = inputRef.current?.value;
@@ -50,7 +55,8 @@ const MovieSearch = () => {
         inputText: requestTargetWord,
         movies: movies,
       });
-      console.log('제출', searchedResult);
+      setSearchedMovies(searchedResult);
+      initSearchState();
     }
   };
 
