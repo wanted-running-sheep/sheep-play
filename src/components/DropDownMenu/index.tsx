@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Search, Star, Menu } from '@/assets/icons';
-import { useNavigate } from 'react-router-dom';
-import List from '@/components/DropDownMenu/List';
 import { NavBarItemInterface } from 'navigation';
+import { useNavigate } from 'react-router-dom';
+
+import { Search, Star, Menu } from '@/assets/icons';
+import List from '@/components/DropDownMenu/List';
 
 const DropDownMenu = () => {
   const navigate = useNavigate();

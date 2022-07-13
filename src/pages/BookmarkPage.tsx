@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MovieProps } from 'Movies';
-import NoData from '@/components/Bookmark/NoData';
+import EmptyData from '@/components/EmptyData';
 import Layout from '@/components/Layout';
 import Slide from '@/components/Slide';
 import { useMovieState } from '@/context/MovieContext';
@@ -16,7 +16,11 @@ const BookmarkPage = () => {
 
   return (
     <Layout>
-      {bookmarkMovies.length ? <Slide movies={bookmarkMovies} /> : <NoData />}
+      {bookmarkMovies.length ? (
+        <Slide movies={bookmarkMovies} />
+      ) : (
+        <EmptyData />
+      )}
     </Layout>
   );
 };

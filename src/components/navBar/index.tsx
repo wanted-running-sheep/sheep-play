@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
+import { NavBarItemInterface } from 'navigation';
+
 import { Search, Star } from '@/assets/icons';
 import Item from './Item';
-import { NavBarItemInterface } from 'navigation';
 
 const NavBar = () => {
   const navigate = useNavigate();

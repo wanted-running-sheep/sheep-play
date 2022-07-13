@@ -1,7 +1,6 @@
 import React, { ChangeEvent, forwardRef } from 'react';
-import Search from '@/assets/icons/Search';
 import styled from 'styled-components';
-
+import Search from '@/assets/icons/Search';
 interface SearchInputProps {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (event: React.KeyboardEvent) => void;

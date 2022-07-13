@@ -1,6 +1,6 @@
-import { useMovieModel } from '@/modules/models/useMovieModel';
 import { ReactNode, createContext, useContext, useEffect } from 'react';
 import { MovieProps } from 'Movies';
+import { useMovieModel } from '@/modules/models/useMovieModel';
 
 interface MovieContextInterface {
   movies: MovieProps[];

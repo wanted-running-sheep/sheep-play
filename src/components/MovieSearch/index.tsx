@@ -10,8 +10,8 @@ import { useMovieState } from '@/context/MovieContext';
 import styled from 'styled-components';
 
 const MovieSearch = () => {
-  const [inputText, setInputText] = useState<string | undefined>('');
-  const [tempText, setTempText] = useState<string | undefined>(inputText);
+  const [inputText, setInputText] = useState<string>('');
+  const [tempText, setTempText] = useState<string>(inputText);
   const [keyEvent, setKeyEvent] = useState<React.KeyboardEvent>();
   const [currentFocusTitle, setCurrentFocusTitle] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);

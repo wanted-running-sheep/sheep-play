@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
-import NavBar from '@/components/NavBar';
-import DropDownMenu from '@/components/DropDownMenu';
 import { useLocation } from 'react-router-dom';
+
+import NavBar from '@/components/navBar';
+import DropDownMenu from '@/components/DropDownMenu';
 import MovieSearch from '@/components/MovieSearch';
 
 interface LayoutProps {

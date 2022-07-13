@@ -4,7 +4,7 @@ import Animation from '@/components/Animation';
 import Rocket from '@/assets/animation/rocket.json';
 import FatCat from '@/assets/animation/fat-cat.json';
 
-const NoData = () => {
+const EmptyData = () => {
   const { pathname } = useLocation();
   return (
     <Container>
@@ -30,7 +30,7 @@ const NoData = () => {
   );
 };
 
-export default NoData;
+export default EmptyData;
 
 const Container = styled.div`
   height: 100%;

@@ -1,6 +1,6 @@
+import { NavBarItemInterface } from 'navigation';
 import styled, { css } from 'styled-components';
 import Item from '@/components/DropDownMenu/Item';
-import { NavBarItemInterface } from 'navigation';
 
 interface ListProps {
   menuItems: NavBarItemInterface[];

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { MovieProps } from 'Movies';
 import { useKeywordModel } from '@/modules/models/useKeywordModel';
-// import { getFilteredMovieTitles } from '@/utils/recommend-movie-list';
 
 interface searchListProps {
   inputText: string;

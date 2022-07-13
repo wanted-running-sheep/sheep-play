@@ -1,4 +1,4 @@
-export const toHoursAndMinutes = (minute: number) => {
+export const convertHoursAndMinutes = (minute: number) => {
   const minutes = minute % 60;
   const hours = Math.floor(minute / 60);
 

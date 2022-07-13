@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Modal from './index';
 import { Close, Star, Add, Delete } from '@/assets/icons';
 import { useMovieModel } from '@/modules/models/useMovieModel';
-import { toHoursAndMinutes } from '@/utils/timeConvert';
+import { convertHoursAndMinutes } from '@/utils/timeConvert';
 import { useMovieState } from '@/context/MovieContext';
 import NoImage from '@/assets/images/no_image.svg';
 interface MovieInfoProps {
@@ -57,7 +57,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
                 <Title>
                   <div>
                     <p>{selectedMovie.year}</p>
-                    <p>{toHoursAndMinutes(selectedMovie.runtime)}</p>
+                    <p>{convertHoursAndMinutes(selectedMovie.runtime)}</p>
                     <p>
                       <Star /> {selectedMovie.rating} / 10
                     </p>
