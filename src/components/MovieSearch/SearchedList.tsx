@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { MovieProps } from 'Movies';
-import { getFilteredMovieTitles } from '@/utils/recommend-movie-list';
+import { useKeywordModel } from '@/modules/models/useKeywordModel';
+// import { getFilteredMovieTitles } from '@/utils/recommend-movie-list';
 
 interface searchListProps {
   inputText: string;
@@ -30,10 +31,11 @@ const SearchedList = ({
     movies: movies,
     listCount: AMOUNTS_OF_RECOMMENED_MOVIES,
   };
+  const { getRecommendMoviesTitle } = useKeywordModel();
 
   useEffect(() => {
     console.log('inputText ', inputText);
-    setRecommendedMovies(getFilteredMovieTitles(filteredOptions));
+    setRecommendedMovies(getRecommendMoviesTitle(filteredOptions));
     setCurrentIndex(INIT_INDEX);
   }, [inputText]);
 

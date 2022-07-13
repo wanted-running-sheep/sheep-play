@@ -4,7 +4,7 @@ import SearchInput from './SearchInput';
 import SearchedList from './SearchedList';
 
 import { useMovieModel } from '@/modules/models/useMovieModel';
-import getFilteredMovies from '@/utils/recommend-movie-list';
+import { useKeywordModel } from '@/modules/models/useKeywordModel';
 import { useMovieState } from '@/context/MovieContext';
 
 import styled from 'styled-components';
@@ -15,9 +15,13 @@ const MovieSearch = () => {
   const [keyEvent, setKeyEvent] = useState<React.KeyboardEvent>();
   const [currentFocusTitle, setCurrentFocusTitle] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
+
   const { getMovies, movies } = useMovieModel();
+  const { getRecommendMovies } = useKeywordModel();
   const { setSearchedMovies } = useMovieState();
+
   let debounce: NodeJS.Timeout;
+
   useEffect(() => {
     getMovies();
   }, []);
@@ -55,7 +59,7 @@ const MovieSearch = () => {
   };
 
   const reqFilteredMoviesAndClear = (targetWord: string) => {
-    const searchedResult = getFilteredMovies({
+    const searchedResult = getRecommendMovies({
       inputText: targetWord,
       movies: movies,
     });
