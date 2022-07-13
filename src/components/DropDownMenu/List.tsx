@@ -26,6 +26,7 @@ const Wrapper = styled.div<{ isAnimation: boolean }>`
   flex-direction: column;
   top: calc(100% + 0.25rem);
   right: 0px;
+  z-index: ${({ theme }) => theme.zIndex.menuLevel};
 
   ${({ theme, isAnimation }) => {
     const { dropDownMountedAnimation, dropDownUnMountedAnimation } =

@@ -28,6 +28,7 @@ const color = {
 
 const zIndex = {
   modalLevel: 500,
+  menuLevel: 300,
 };
 
 export const theme = {
