@@ -59,7 +59,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
                     <p>{selectedMovie.year}</p>
                     <p>{toHoursAndMinutes(selectedMovie.runtime)}</p>
                     <p>
-                      <Star color="#F4C518" /> {selectedMovie.rating} / 10
+                      <Star /> {selectedMovie.rating} / 10
                     </p>
                   </div>
 
@@ -241,8 +241,9 @@ const Title = styled.div`
         border-right: 2px solid ${({ theme }) => theme.color.border.lightgray};
       }
       svg {
-        width: 28px;
+        width: 20px;
         margin-right: 3px;
+        color: #f4c518;
       }
     }
   }
