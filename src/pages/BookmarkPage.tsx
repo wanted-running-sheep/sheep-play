@@ -1,20 +1,24 @@
+import { useEffect, useState } from 'react';
+import { MovieProps } from 'Movies';
+import NoData from '@/components/Bookmark/NoData';
 import Layout from '@/components/Layout';
 import Slide from '@/components/Slide';
 import { useMovieState } from '@/context/MovieContext';
-import { MovieProps } from 'Movies';
-import { useEffect, useState } from 'react';
 
 const BookmarkPage = () => {
   const { movies } = useMovieState();
   const [bookmarkMovies, setBookmarkMovies] = useState<MovieProps[]>([]);
 
   useEffect(() => {
-    setBookmarkMovies(movies.filter((movie) => movie.like));
+    const getLikedMovies = async () => {
+      const likedMovies = await movies.filter((movie) => movie.like);
+      setBookmarkMovies(likedMovies);
+    };
+    getLikedMovies();
   }, []);
-
   return (
     <Layout>
-      <Slide movies={bookmarkMovies} />
+      {bookmarkMovies.length ? <Slide movies={bookmarkMovies} /> : <NoData />}
     </Layout>
   );
 };
