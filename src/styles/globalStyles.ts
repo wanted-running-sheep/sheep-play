@@ -8,6 +8,9 @@ const GlobalStyles = createGlobalStyle`
    outline:none;
    border:none;
  }
+ body{
+  font-family: 'Noto Sans KR', sans-serif;
+ }
  ul{
   list-style: none;
  }

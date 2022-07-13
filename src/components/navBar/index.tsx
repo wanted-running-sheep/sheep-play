@@ -45,6 +45,7 @@ const Wrapper = styled.nav`
   height: 100vh;
   background-color: ${({ theme }) => theme.color.background.indigo};
   padding: 40px 10px;
+
   ${({ theme }) => theme.media.mobile`
     display: none;
   `}

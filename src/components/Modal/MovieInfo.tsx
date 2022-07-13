@@ -249,9 +249,11 @@ const Title = styled.div`
 `;
 const Article = styled.div`
   height: 220px;
+
   overflow-y: auto;
   p {
     font-size: 18px;
+
     color: ${({ theme }) => theme.color.font.white};
 
     ${({ theme }) => theme.media.tablet`

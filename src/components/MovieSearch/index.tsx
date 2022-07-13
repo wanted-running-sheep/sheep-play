@@ -108,7 +108,6 @@ const SearchWrap = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 4px;
-
   width: 100%;
   max-width: 430px;
   padding: 0 10px;
