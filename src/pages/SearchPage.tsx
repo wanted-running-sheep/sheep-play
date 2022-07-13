@@ -6,12 +6,8 @@ import NoData from '@/components/Bookmark/NoData';
 const SearchPage = () => {
   const { movies } = useMovieState();
 
-  if (!movies.length) return <NoData />;
-
   return (
-    <Layout>
-      <Slide movies={movies} />
-    </Layout>
+    <Layout>{movies.length ? <Slide movies={movies} /> : <NoData />}</Layout>
   );
 };
 
