@@ -10,11 +10,8 @@ const BookmarkPage = () => {
   const [bookmarkMovies, setBookmarkMovies] = useState<MovieProps[]>([]);
 
   useEffect(() => {
-    const getLikedMovies = async () => {
-      const likedMovies = await movies.filter((movie) => movie.like);
-      setBookmarkMovies(likedMovies);
-    };
-    getLikedMovies();
+    const likedMovies = movies.filter((movie) => movie.like);
+    setBookmarkMovies(likedMovies);
   }, [JSON.stringify(movies)]);
 
   return (
