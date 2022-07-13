@@ -12,24 +12,28 @@ interface SlideBoxProps {
 
 const SlideBox = ({ movies}: SlideBoxProps) => {
     const slideRef = useRef<HTMLDivElement>(null);
-    const { slideMaxIdx, currentSlide, setCurrentSlide } = useSlide(slideRef);
+    const { slideMaxIdx, currentSlide, setCurrentSlide, totalSlides, setTotalSlides } = useSlide(slideRef);
     const [selectedMovie, setSelectedMovie] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
     const onClickToggleModal = useCallback(
         (id?: number) => {
           if (id) setSelectedMovie(id);
           setIsModalOpen(!isModalOpen);
-        },
+        },  
         [isModalOpen]
-      );
+  );
 
+  useEffect(() => {
+    setTotalSlides(movies.length);
+  }, [movies]);
+  
   return (
     <>
     {isModalOpen && (
         <MovieInfo close={() => onClickToggleModal()} movieId={selectedMovie} />
       )}
-        <ArrowButton currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} slideMaxIdx={slideMaxIdx} />
+        <ArrowButton totalSlides={totalSlides} setTotalSlides={setTotalSlides} currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} slideMaxIdx={slideMaxIdx} />
         <SlideWrapper ref={slideRef}>
             {movies?.map(({ id, large_cover_image, title }) => (
             <PosterImageWrapper key={id}>
