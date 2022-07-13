@@ -1,10 +1,10 @@
 import { RefObject, useEffect, useState } from 'react';
 
 const useSlide = (slideRef: RefObject<HTMLDivElement>) => {
-  const TOTAL_SLIDES_COUNT = 10;
   const IMAGE_SIZE = 230;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slideMaxIdx, setSlideMaxIdx] = useState(0);
+  const [totalSlides, setTotalSlides] = useState(1);
 
   useEffect(() => {
     const slide = slideRef.current;
@@ -14,11 +14,11 @@ const useSlide = (slideRef: RefObject<HTMLDivElement>) => {
     slide.style.transform = `translateX(-${currentSlide * IMAGE_SIZE}px)`;
 
     setSlideMaxIdx(
-      (IMAGE_SIZE * TOTAL_SLIDES_COUNT - slide.offsetWidth) / IMAGE_SIZE
+      (IMAGE_SIZE * totalSlides - slide.offsetWidth) / IMAGE_SIZE
     );
-  }, [currentSlide]);
+  }, [currentSlide, totalSlides]);
 
-  return { slideMaxIdx: Math.ceil(slideMaxIdx), currentSlide, setCurrentSlide };
+  return {totalSlides, setTotalSlides, slideMaxIdx: Math.ceil(slideMaxIdx), currentSlide, setCurrentSlide };
 };
 
 export default useSlide;

@@ -5,6 +5,7 @@ const webpack = require('webpack');
 module.exports = {
   mode: 'development',
   entry: `${path.resolve(__dirname, './src')}/index.tsx`,
+  devtool: 'eval-cheap-source-map',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'], //module import시 확장자 안붙여도 가능하도록 해주는 옵션
     alias: {
@@ -21,6 +22,10 @@ module.exports = {
           presets: ['@babel/preset-react'],
         },
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
       },
     ],
   },
