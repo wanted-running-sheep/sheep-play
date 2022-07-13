@@ -54,6 +54,7 @@ const MenuContainer = styled.div`
   ${({ theme }) => theme.media.mobile`
     position: relative;
     display: block;
+    margin-left: 10px;
     width: 30px;
     height: 30px;
     cursor: pointer;

@@ -52,8 +52,9 @@ const ContentContainer = styled.main`
 
 const SearchContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   ${({ theme }) => theme.media.mobile`
+    height: 50px;
     flex-direction: row-reverse;
   `}
 `;
