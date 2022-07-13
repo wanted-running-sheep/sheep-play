@@ -6,10 +6,12 @@ interface MovieContextInterface {
   movies: MovieProps[];
   addBookmarkById: (id: number) => void;
   setSearchedMovies: (movies: MovieProps[]) => void;
+  originMovies: MovieProps[];
 }
 
 const defaultContext: MovieContextInterface = {
   movies: [],
+  originMovies: [],
   addBookmarkById: () => {},
   setSearchedMovies: () => {},
 };
@@ -17,10 +19,11 @@ const defaultContext: MovieContextInterface = {
 const MoiveContext = createContext<MovieContextInterface>(defaultContext);
 
 export const MoiveContextProvider = ({ children }: { children: ReactNode }) => {
-  const { movies, setMovies, getMovies } = useMovieModel();
+  const { movies, setMovies, getMovies, originMovies, setOriginMovies } =
+    useMovieModel();
 
   const addBookmarkById = (id: number) => {
-    setMovies((prevMovies) =>
+    setOriginMovies((prevMovies) =>
       prevMovies.map((movie) => {
         return movie.id === id ? { ...movie, like: !movie.like } : { ...movie };
       })
@@ -35,7 +38,12 @@ export const MoiveContextProvider = ({ children }: { children: ReactNode }) => {
     getMovies();
   }, []);
 
-  const value = { movies, addBookmarkById, setSearchedMovies };
+  const value = {
+    movies,
+    addBookmarkById,
+    setSearchedMovies,
+    originMovies,
+  };
 
   return (
     <MoiveContext.Provider value={value}>{children}</MoiveContext.Provider>

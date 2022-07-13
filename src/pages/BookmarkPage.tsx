@@ -6,13 +6,13 @@ import Slide from '@/components/Slide';
 import { useMovieState } from '@/context/MovieContext';
 
 const BookmarkPage = () => {
-  const { movies } = useMovieState();
+  const { originMovies } = useMovieState();
   const [bookmarkMovies, setBookmarkMovies] = useState<MovieProps[]>([]);
 
   useEffect(() => {
-    const likedMovies = movies.filter((movie) => movie.like);
+    const likedMovies = originMovies.filter((movie) => movie.like);
     setBookmarkMovies(likedMovies);
-  }, [JSON.stringify(movies)]);
+  }, [JSON.stringify(originMovies)]);
 
   return (
     <Layout>

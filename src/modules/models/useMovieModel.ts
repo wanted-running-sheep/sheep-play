@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { movieRequest } from '@/modules/services/movieService';
 import { AxiosResponse } from 'axios';
 
@@ -6,10 +6,11 @@ import { MovieProps } from 'Movies';
 
 export const useMovieModel = () => {
   const [movies, setMovies] = useState<MovieProps[]>([]);
-
+  const [originMovies, setOriginMovies] = useState<MovieProps[]>([]);
   const updateMovies = (response: AxiosResponse | void) => {
     if (response) {
       setMovies(response.data);
+      setOriginMovies(response.data);
     }
   };
 
@@ -33,5 +34,7 @@ export const useMovieModel = () => {
     getMovieById,
     getMovies,
     patchMovieById,
+    originMovies,
+    setOriginMovies,
   };
 };
