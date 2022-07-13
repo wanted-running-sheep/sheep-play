@@ -15,7 +15,8 @@ const BookmarkPage = () => {
       setBookmarkMovies(likedMovies);
     };
     getLikedMovies();
-  }, []);
+  }, [JSON.stringify(movies)]);
+
   return (
     <Layout>
       {bookmarkMovies.length ? <Slide movies={bookmarkMovies} /> : <NoData />}

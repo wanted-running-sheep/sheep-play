@@ -6,6 +6,7 @@ import Modal from './index';
 import { Close, Star, Add, Delete } from '@/assets/icons';
 import { useMovieModel } from '@/modules/models/useMovieModel';
 import { toHoursAndMinutes } from '@/utils/timeConvert';
+import { useMovieState } from '@/context/MovieContext';
 interface MovieInfoProps {
   close: () => void;
   movieId: number;
@@ -14,6 +15,8 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<MovieProps>();
   const { getMovieById, patchMovieById } = useMovieModel();
+  const { addBookmarkById } = useMovieState();
+
   useEffect(() => {
     const getMovie = async () => {
       const response = await getMovieById(`/${movieId}`);
@@ -25,8 +28,8 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
 
   const toggleBookmark = () => {
     const bookmarkMovie = { ...selectedMovie };
-    bookmarkMovie.like = !bookmarkMovie.like;
-    patchMovieById(movieId, bookmarkMovie);
+    patchMovieById(movieId, { like: !bookmarkMovie.like });
+    addBookmarkById(movieId);
     setIsLiked(!isLiked);
   };
 
