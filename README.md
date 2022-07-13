@@ -67,32 +67,52 @@
 
 ## 3. 프로젝트 구조
 ```
-📁 public
-└── data
-    └── feed.json
-
 📁 src
-├── api
-│   └── api
+├── @types
+
 ├── assets
+│   ├── animation
+│   ├── database
+│   ├── icons
 │   └── images
-│        └── InstagramLogo
+
 ├── components
-│   ├── Feed
-│   ├── LoginForm
-│   ├── LoginInput
-│   └── NavigationBar
+│   ├── Animation
+│   ├── DropDownMenu
+│   ├── EmptyData
+│   ├── Layout
+│   ├── Modal
+│   ├── MovieSearch
+│   ├── navBar
+│   └── Slide
+
 ├── context
-│   └── AuthContext
+│   └── MovieContext
+
 ├── hooks
-│   └── useFeed
+│   ├── useInfinityScroll
+│   ├── useSliceMovie
+│   └── useSlide
+
+├── modules
+│   ├── http
+│   ├── models
+│   └── services
+
 ├── pages
-│   ├── Login
-│   └── Main
+│   ├── BookmarkPage
+│   └── SearchPage
+
+├── routes
 ├── styles
-│   └── GlobalStyle
+│   ├── globalStyles
+│   ├── animation
+│   ├── media
+│   ├── mixins
+│   └── theme
+
 ├── util
-│   └── validation
+│   └── timeConvert
 │
 ├── App.js
 └── index.js
