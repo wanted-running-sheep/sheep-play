@@ -32,7 +32,6 @@ const SearchedList = ({
   };
 
   useEffect(() => {
-    console.log('inputText', inputText);
     setRecommendedMovies(getFilteredMovieTitles(filteredOptions));
     setCurrentIndex(INIT_INDEX);
   }, [inputText]);

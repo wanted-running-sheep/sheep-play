@@ -53,6 +53,7 @@ const MovieSearch = () => {
       inputText: targetWord,
       movies: movies,
     });
+
     setSearchedMovies(searchedResult);
     initSearchState();
   };

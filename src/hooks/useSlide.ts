@@ -11,10 +11,11 @@ const useSlide = (slideRef: RefObject<HTMLDivElement>) => {
     if (!slide || window.innerWidth <= 600) return;
 
     slide.style.transition = 'all 0.5s ease-in-out';
-    slide.style.transform = `translateX(-${currentSlide*IMAGE_SIZE}px)`;
+    slide.style.transform = `translateX(-${currentSlide * IMAGE_SIZE}px)`;
 
-    console.log(slide.offsetWidth)
-    setSlideMaxIdx(((IMAGE_SIZE*TOTAL_SLIDES_COUNT)-slide.offsetWidth)/IMAGE_SIZE);
+    setSlideMaxIdx(
+      (IMAGE_SIZE * TOTAL_SLIDES_COUNT - slide.offsetWidth) / IMAGE_SIZE
+    );
   }, [currentSlide]);
 
   return { slideMaxIdx: Math.ceil(slideMaxIdx), currentSlide, setCurrentSlide };
