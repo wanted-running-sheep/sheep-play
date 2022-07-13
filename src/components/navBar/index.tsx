@@ -45,7 +45,7 @@ const Wrapper = styled.nav`
   height: 100vh;
   background-color: ${({ theme }) => theme.color.background.indigo};
   padding: 40px 10px;
-  font-family: 'Noto Sans KR', sans-serif;
+
   ${({ theme }) => theme.media.mobile`
     display: none;
   `}

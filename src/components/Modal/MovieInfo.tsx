@@ -134,7 +134,6 @@ const BaseBackground = styled.div<{ baseSrc: string }>`
 `;
 const Wrapper = styled.div`
   position: absolute;
-  font-family: 'Noto Sans KR', sans-serif;
   padding: 0px 70px;
   display: flex;
   top: 100px;
@@ -207,7 +206,6 @@ const Title = styled.div`
     font-weight: 900;
     color: ${({ theme }) => theme.color.font.white};
     font-size: 55px;
-    font-family: 'Noto Sans KR', sans-serif;
     line-height: 45px;
     letter-spacing: -1px;
     flex: 1 1 100%;
