@@ -102,7 +102,7 @@ const SearchWrap = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 4px;
-
+  font-family: 'Noto Sans KR', sans-serif;
   width: 100%;
   max-width: 430px;
   padding: 0 10px;
