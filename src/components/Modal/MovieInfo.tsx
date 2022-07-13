@@ -7,6 +7,7 @@ import { Close, Star, Add, Delete } from '@/assets/icons';
 import { useMovieModel } from '@/modules/models/useMovieModel';
 import { toHoursAndMinutes } from '@/utils/timeConvert';
 import { useMovieState } from '@/context/MovieContext';
+import NoImage from '@/assets/images/no_image.svg';
 interface MovieInfoProps {
   close: () => void;
   movieId: number;
@@ -32,6 +33,11 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
     addBookmarkById(movieId);
     setIsLiked(!isLiked);
   };
+  const onErrorImage = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    event.currentTarget.src = NoImage;
+  };
 
   return (
     <Modal close={close}>
@@ -44,6 +50,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
             <img
               src={selectedMovie.medium_cover_image}
               alt={selectedMovie.title}
+              onError={(e) => onErrorImage(e)}
             />
             <Section>
               <Header>

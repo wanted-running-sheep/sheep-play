@@ -1,54 +1,64 @@
-import React, {useRef, useCallback, useState, useEffect} from 'react'
-import styled from 'styled-components'
-import {MovieProps} from 'Movies';
+import React, { useRef, useCallback, useState } from 'react';
+import styled from 'styled-components';
+import { MovieProps } from 'Movies';
 import ArrowButton from '@/components/Slide/ArrowButton';
 import useSlide from '@/hooks/useSlide';
 import MovieInfo from '@/components/Modal/MovieInfo';
-import useInfinityScroll from '@/hooks/useInfinityScroll';
-
+import NoImage from '@/assets/images/no_image.svg';
 interface SlideBoxProps {
-    movies: MovieProps[];
+  movies: MovieProps[];
 }
 
-const SlideBox = ({ movies}: SlideBoxProps) => {
-    const slideRef = useRef<HTMLDivElement>(null);
-    const { slideMaxIdx, currentSlide, setCurrentSlide } = useSlide(slideRef);
-    const [selectedMovie, setSelectedMovie] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+const SlideBox = ({ movies }: SlideBoxProps) => {
+  const slideRef = useRef<HTMLDivElement>(null);
+  const { slideMaxIdx, currentSlide, setCurrentSlide } = useSlide(slideRef);
+  const [selectedMovie, setSelectedMovie] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const onClickToggleModal = useCallback(
-        (id?: number) => {
-          if (id) setSelectedMovie(id);
-          setIsModalOpen(!isModalOpen);
-        },
-        [isModalOpen]
-      );
+  const onClickToggleModal = useCallback(
+    (id?: number) => {
+      if (id) setSelectedMovie(id);
+      setIsModalOpen(!isModalOpen);
+    },
+    [isModalOpen]
+  );
+
+  const onErrorImage = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    event.currentTarget.src = NoImage;
+  };
 
   return (
     <>
-    {isModalOpen && (
+      {isModalOpen && (
         <MovieInfo close={() => onClickToggleModal()} movieId={selectedMovie} />
       )}
-        <ArrowButton currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} slideMaxIdx={slideMaxIdx} />
-        <SlideWrapper ref={slideRef}>
-            {movies?.map(({ id, large_cover_image, title }) => (
-            <PosterImageWrapper key={id}>
-                <PosterImage
-                key={id}
-                src={large_cover_image}
-                alt={title}
-                onClick={() => onClickToggleModal(id)}
-                />
-            </PosterImageWrapper>
-            ))}
-        </SlideWrapper>
-      </>
-  )
-}
+      <ArrowButton
+        currentSlide={currentSlide}
+        setCurrentSlide={setCurrentSlide}
+        slideMaxIdx={slideMaxIdx}
+      />
+      <SlideWrapper ref={slideRef}>
+        {movies?.map(({ id, large_cover_image, title }) => (
+          <PosterImageWrapper key={id}>
+            <PosterImage
+              key={id}
+              src={large_cover_image}
+              alt={title}
+              onClick={() => onClickToggleModal(id)}
+              onError={(e) => onErrorImage(e)}
+            />
+          </PosterImageWrapper>
+        ))}
+      </SlideWrapper>
+    </>
+  );
+};
 
 export default SlideBox;
 
- const SlideWrapper = styled.div`
+const SlideWrapper = styled.div`
   height: 330px;
   width: 100%;
   display: flex;
@@ -69,7 +79,7 @@ export default SlideBox;
       margin-top: 20px;
     }
   `};
-`; 
+`;
 
 const PosterImageWrapper = styled.div`
   height: 100%;
