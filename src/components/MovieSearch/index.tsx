@@ -17,15 +17,19 @@ const MovieSearch = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { getMovies, movies } = useMovieModel();
   const { setSearchedMovies } = useMovieState();
-
+  let debounce: NodeJS.Timeout;
   useEffect(() => {
     getMovies();
   }, []);
 
   useEffect(() => {
     const INTERVAL_TIME = 300;
-    const debounce = setTimeout(() => setInputText(tempText), INTERVAL_TIME);
-    return () => clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      setInputText(tempText);
+    }, INTERVAL_TIME);
+    return () => {
+      clearTimeout(debounce);
+    };
   }, [tempText]);
 
   const onChangeInput = () => {
@@ -45,7 +49,9 @@ const MovieSearch = () => {
 
   const initSearchState = () => {
     setInputText('');
+    setTempText('');
     setCurrentFocusTitle('');
+    clearTimeout(debounce);
   };
 
   const reqFilteredMoviesAndClear = (targetWord: string) => {
@@ -79,7 +85,7 @@ const MovieSearch = () => {
 
         {inputText && (
           <SearchedList
-            inputText={inputText}
+            inputText={inputText as string}
             movies={movies}
             keyEvent={keyEvent}
             handleFocusTitle={handleFocusTitle}
