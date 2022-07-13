@@ -6,7 +6,8 @@ interface ArrowButtonProps {
     currentSlide: number;
     slideMaxIdx: number;
     setCurrentSlide: (v: number) => void;
-    
+    totalSlides: number;
+    setTotalSlides: (v: number) => void;
 }
 
 const ArrowButton = ({currentSlide, slideMaxIdx,setCurrentSlide}: ArrowButtonProps) => {

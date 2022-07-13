@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { MovieProps } from 'Movies';
 import ArrowButton from '@/components/Slide/ArrowButton';
@@ -11,9 +11,19 @@ interface SlideBoxProps {
 
 const SlideBox = ({ movies }: SlideBoxProps) => {
   const slideRef = useRef<HTMLDivElement>(null);
-  const { slideMaxIdx, currentSlide, setCurrentSlide } = useSlide(slideRef);
+  const {
+    slideMaxIdx,
+    currentSlide,
+    setCurrentSlide,
+    totalSlides,
+    setTotalSlides,
+  } = useSlide(slideRef);
   const [selectedMovie, setSelectedMovie] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    setTotalSlides(movies.length);
+  }, [movies]);
 
   const onClickToggleModal = useCallback(
     (id?: number) => {
@@ -35,6 +45,8 @@ const SlideBox = ({ movies }: SlideBoxProps) => {
         <MovieInfo close={() => onClickToggleModal()} movieId={selectedMovie} />
       )}
       <ArrowButton
+        totalSlides={totalSlides}
+        setTotalSlides={setTotalSlides}
         currentSlide={currentSlide}
         setCurrentSlide={setCurrentSlide}
         slideMaxIdx={slideMaxIdx}
