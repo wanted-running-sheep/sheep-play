@@ -52,7 +52,7 @@ class keywordService {
 
             // 한 글자씩 확인하며 키워드와 같은 글자에 <mark> 태그 추가 + 거리 비례 가장 유사한 검색어 확인
             while (index < keywordLength) {
-              const sameWordIndex = groups.indexOf(0, inputLength);
+              const sameWordIndex = match.indexOf(keyword[index], lastIndex);
               highlightKeyword.push(match.substring(lastIndex, sameWordIndex));
               highlightKeyword.push(`<mark>${keyword[index]}</mark>`);
               if (lastIndex > 0) {
@@ -64,7 +64,7 @@ class keywordService {
               lastIndex = sameWordIndex + 1;
               index++;
             }
-            return highlightKeyword + '';
+            return highlightKeyword.join('');
           }
         );
 
