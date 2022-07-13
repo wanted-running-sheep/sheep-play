@@ -10,6 +10,7 @@
 <br/>
 
 [🌍 배포 링크]()
+[😎 피그마 디자인 확인하기](https://www.figma.com/file/iQ8pGZmK5SsRms0WGNT8me/%EC%98%81%ED%99%94-%EC%A0%95%EB%B3%B4-%EC%82%AC%EC%9D%B4%ED%8A%B8?node-id=101%3A2)
 
 <br />
 
