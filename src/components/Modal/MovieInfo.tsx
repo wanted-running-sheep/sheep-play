@@ -11,12 +11,14 @@ interface MovieInfoProps {
   movieId: number;
 }
 const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
+  const [isLiked, setIsLiked] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<MovieProps>();
   const { getMovieById, patchMovieById } = useMovieModel();
   useEffect(() => {
     const getMovie = async () => {
       const response = await getMovieById(`/${movieId}`);
       setSelectedMovie(response);
+      setIsLiked(response.like);
     };
     getMovie();
   }, []);
@@ -25,6 +27,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
     const bookmarkMovie = { ...selectedMovie };
     bookmarkMovie.like = !bookmarkMovie.like;
     patchMovieById(movieId, bookmarkMovie);
+    setIsLiked(!isLiked);
   };
 
   return (
@@ -83,7 +86,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ close, movieId }) => {
           <ButtonWrapper>
             <button>Watch</button>
             <button onClick={toggleBookmark}>
-              {selectedMovie.like ? (
+              {isLiked ? (
                 <>
                   <Delete />
                   Delete Bookmark
