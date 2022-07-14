@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
   mode: 'development',
   entry: `${path.resolve(__dirname, './src')}/index.tsx`,
-  devtool: 'eval-cheap-source-map',
+  devtool: 'eval-cheap-module-source-map',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'], //module import시 확장자 안붙여도 가능하도록 해주는 옵션
     alias: {
@@ -24,8 +24,12 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpg|gif|svg|ico)$/,
         loader: 'file-loader',
+        options: {
+          publicPath: './dist/',
+          name: '[name].[ext]',
+        },
       },
     ],
   },
@@ -34,11 +38,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: `${path.resolve(__dirname, './public')}/index.html`,
       inject: 'body',
+      favicon: './public/favicon.ico',
     }),
     //각 모듈마다 import React from 'react'주입
     //컴포넌트 모듈 마다 안적어 줘도 됨
     new webpack.ProvidePlugin({
       React: 'react',
+    }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env),
     }),
   ],
 
